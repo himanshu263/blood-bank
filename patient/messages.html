@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Messages page specific styles */
+        .messages-container {
+            display: flex;
+            height: calc(100vh - 180px);
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .contacts-sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contacts-header {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .contacts-search {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 5px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contacts-search input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .contacts-search i {
+            color: #6c757d;
+            margin-right: 10px;
+        }
+        
+        .contacts-filter {
+            display: flex;
+            margin-top: 15px;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            padding: 5px 10px;
+            background: #e9ecef;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option:hover {
+            background: #dee2e6;
+        }
+        
+        .filter-option.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .contacts-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+        
+        .contact-item:hover {
+            background: #e9ecef;
+        }
+        
+        .contact-item.active {
+            background: rgba(var(--primary-rgb), 0.1);
+        }
+        
+        .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            position: relative;
+        }
+        
+        .contact-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .contact-status {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #f8f9fa;
+        }
+        
+        .contact-status.online {
+            background: #28a745;
+        }
+        
+        .contact-status.offline {
+            background: #6c757d;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-name {
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            color: #343a40;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .contact-time {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+        
+        .contact-preview {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .contact-badge {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-contact {
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .chat-contact-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .chat-contact-info h3 {
+            margin: 0 0 3px 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .chat-contact-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: #28a745;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .chat-action {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-action:hover {
+            background: #e9ecef;
+            color: #343a40;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        
+        .message-date {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .message-date span {
+            background: #e9ecef;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #6c757d;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .message-date::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dee2e6;
+            z-index: 0;
+        }
+        
+        .message {
+            display: flex;
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+        
+        .message.received {
+            align-self: flex-start;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+            margin-left: auto;
+        }
+        
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        
+        .message.sent .message-avatar {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .message.sent .message-content {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .message-text {
+            margin: 0 0 5px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-align: right;
+        }
+        
+        .message.sent .message-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .message-status {
+            display: inline-block;
+            margin-left: 5px;
+        }
+        
+        .message-status i {
+            font-size: 0.7rem;
+        }
+        
+        .message-input {
+            padding: 15px 20px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            background: white;
+        }
+        
+        .message-input-actions {
+            display: flex;
+            gap: 15px;
+            margin-right: 15px;
+        }
+        
+        .message-input-action {
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .message-input-action:hover {
+            color: #343a40;
+        }
+        
+        .message-input-field {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .message-input-field input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+        }
+        
+        .message-input-send {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .message-input-send:hover {
+            background: var(--primary-dark);
+        }
+        
+        .empty-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .empty-chat i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+        
+        .empty-chat h3 {
+            margin: 0 0 10px 0;
+            color: #343a40;
+        }
+        
+        .empty-chat p {
+            margin: 0 0 20px 0;
+            max-width: 400px;
+        }
+        
+        .empty-chat button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .empty-chat button:hover {
+            background: var(--primary-dark);
+        }
+        
+        .message-file {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .message.sent .message-file {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .message-file i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .message-file-info {
+            flex: 1;
+        }
+        
+        .message-file-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0 0 3px 0;
+        }
+        
+        .message-file-size {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin: 0;
+        }
+        
+        .message.sent .message-file-size {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .message-file-action {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 5px;
+        }
+        
+        .message.sent .message-file-action {
+            color: white;
+        }
+        
+        .message-image {
+            max-width: 200px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .message-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-left: 5px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #adb5bd;
+            margin-right: 3px;
+            animation: typingAnimation 1.5s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            margin-right: 0;
+        }
+        
+        @keyframes typingAnimation {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        
+        .mobile-contacts-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            color: #6c757d;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .messages-container {
+                position: relative;
+                height: calc(100vh - 150px);
+            }
+            
+            .contacts-sidebar {
+                position: absolute;
+                left: -300px;
+                top: 0;
+                bottom: 0;
+                z-index: 10;
+                transition: all 0.3s ease;
+            }
+            
+            .contacts-sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-contacts-toggle {
+                display: flex;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>Sarah Johnson</h3>
+                <p>Patient</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="blood-requests.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Blood Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="medical-history.html">
+                        <i class="fas fa-notes-medical"></i>
+                        <span>Medical History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="appointments.html">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="hospitals.html">
+                        <i class="fas fa-hospital"></i>
+                        <span>Hospitals</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="messages.html">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your blood request #REQ-1234 has been approved</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Appointment reminder: Tomorrow at 10:00 AM</p>
+                                    <span class="notification-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>New message from Dr. Williams</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+                        <span>Sarah Johnson</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Messages</h1>
+                <p>Communicate with your healthcare providers and blood bank staff.</p>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="messages-container">
+                <!-- Contacts Sidebar -->
+                <div class="contacts-sidebar">
+                    <div class="contacts-header">
+                        <div class="contacts-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search contacts...">
+                        </div>
+                        <div class="contacts-filter">
+                            <div class="filter-option active" data-filter="all">All</div>
+                            <div class="filter-option" data-filter="doctors">Doctors</div>
+                            <div class="filter-option" data-filter="staff">Staff</div>
+                            <div class="filter-option" data-filter="unread">Unread</div>
+                        </div>
+                    </div>
+                    <div class="contacts-list">
+                        <!-- Contact Item 1 -->
+                        <div class="contact-item active" data-contact="dr-williams">
+                            <div class="contact-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                                <div class="contact-status online"></div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">
+                                    <span>Dr. Williams</span>
+                                    <span class="contact-time">10:30 AM</span>
+                                </div>
+                                <div class="contact-preview">
+                                    <span>Your test results look good. Let's discuss...</span>
+                                    <span class="contact-badge">2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Item 2 -->
+                        <div class="contact-item" data-contact="nurse-johnson">
+                            <div class="contact-avatar">
+                                <img src="../images/nurse-1.jpg" alt="Nurse Johnson">
+                                <div class="contact-status online"></div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">
+                                    <span>Nurse Johnson</span>
+                                    <span class="contact-time">Yesterday</span>
+                                </div>
+                                <div class="contact-preview">
+                                    <span>Your appointment has been confirmed for...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Item 3 -->
+                        <div class="contact-item" data-contact="blood-bank-admin">
+                            <div class="contact-avatar">
+                                <img src="../images/admin-1.jpg" alt="Blood Bank Admin">
+                                <div class="contact-status offline"></div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">
+                                    <span>Blood Bank Admin</span>
+                                    <span class="contact-time">Monday</span>
+                                </div>
+                                <div class="contact-preview">
+                                    <span>Your blood request has been processed...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Item 4 -->
+                        <div class="contact-item" data-contact="dr-patel">
+                            <div class="contact-avatar">
+                                <img src="../images/doctor-2.jpg" alt="Dr. Patel">
+                                <div class="contact-status offline"></div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">
+                                    <span>Dr. Patel</span>
+                                    <span class="contact-time">Last week</span>
+                                </div>
+                                <div class="contact-preview">
+                                    <span>Please remember to take your medication...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Item 5 -->
+                        <div class="contact-item" data-contact="lab-technician">
+                            <div class="contact-avatar">
+                                <img src="../images/lab-tech.jpg" alt="Lab Technician">
+                                <div class="contact-status online"></div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">
+                                    <span>Lab Technician</span>
+                                    <span class="contact-time">Last week</span>
+                                </div>
+                                <div class="contact-preview">
+                                    <span>Your blood sample has been collected...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Item 6 -->
+                        <div class="contact-item" data-contact="receptionist">
+                            <div class="contact-avatar">
+                                <img src="../images/receptionist.jpg" alt="Receptionist">
+                                <div class="contact-status offline"></div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">
+                                    <span>Receptionist</span>
+                                    <span class="contact-time">2 weeks ago</span>
+                                </div>
+                                <div class="contact-preview">
+                                    <span>Your insurance information has been updated...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Container -->
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="mobile-contacts-toggle">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="chat-contact">
+                            <div class="chat-contact-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                            </div>
+                            <div class="chat-contact-info">
+                                <h3>Dr. Williams</h3>
+                                <p>Online</p>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <div class="chat-action" title="Voice Call">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="chat-action" title="Video Call">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="chat-action" title="More Options">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-messages">
+                        <!-- Message Date -->
+                        <div class="message-date">
+                            <span>Today</span>
+                        </div>
+
+                        <!-- Received Message with File -->
+                        <div class="message received">
+                            <div class="message-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-file">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <div class="message-file-info">
+                                        <p class="message-file-name">Blood_Test_Results.pdf</p>
+                                        <p class="message-file-size">1.2 MB</p>
+                                    </div>
+                                    <div class="message-file-action">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                </div>
+                                <p class="message-text">Here are your latest blood test results. Everything looks good!</p>
+                                <p class="message-time">10:15 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Sent Message -->
+                        <div class="message sent">
+                            <div class="message-avatar">
+                                <img src="../images/patient-avatar.jpg" alt="Sarah Johnson">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">Thank you, Dr. Williams. I've been feeling much better since starting the new medication.</p>
+                                <p class="message-time">10:18 AM <span class="message-status"><i class="fas fa-check-double"></i></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Received Message -->
+                        <div class="message received">
+                            <div class="message-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">That's great to hear! Your hemoglobin levels have improved significantly. I'd like to discuss your progress in more detail.</p>
+                                <p class="message-time">10:20 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Received Message with Image -->
+                        <div class="message received">
+                            <div class="message-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-image">
+                                    <img src="../images/blood-chart.jpg" alt="Blood Chart">
+                                </div>
+                                <p class="message-text">Here's a chart showing your progress over the last 3 months. The upward trend is very encouraging.</p>
+                                <p class="message-time">10:22 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Sent Message -->
+                        <div class="message sent">
+                            <div class="message-avatar">
+                                <img src="../images/patient-avatar.jpg" alt="Sarah Johnson">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">That's wonderful news! When should I schedule my next appointment?</p>
+                                <p class="message-time">10:25 AM <span class="message-status"><i class="fas fa-check-double"></i></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Received Message -->
+                        <div class="message received">
+                            <div class="message-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">Let's schedule a follow-up in 4 weeks. I'll have my assistant send you some available time slots.</p>
+                                <p class="message-time">10:28 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Sent Message -->
+                        <div class="message sent">
+                            <div class="message-avatar">
+                                <img src="../images/patient-avatar.jpg" alt="Sarah Johnson">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">Perfect, thank you! Should I continue with the same dosage of medication?</p>
+                                <p class="message-time">10:30 AM <span class="message-status"><i class="fas fa-check"></i></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Typing Indicator -->
+                        <div class="message received">
+                            <div class="message-avatar">
+                                <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                            </div>
+                            <div class="typing-indicator">
+                                <span>Dr. Williams is typing</span>
+                                <div class="typing-dots">
+                                    <div class="typing-dot"></div>
+                                    <div class="typing-dot"></div>
+                                    <div class="typing-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="message-input">
+                        <div class="message-input-actions">
+                            <div class="message-input-action" title="Attach File">
+                                <i class="fas fa-paperclip"></i>
+                            </div>
+                            <div class="message-input-action" title="Insert Image">
+                                <i class="fas fa-image"></i>
+                            </div>
+                        </div>
+                        <div class="message-input-field">
+                            <input type="text" placeholder="Type a message...">
+                        </div>
+                        <div class="message-input-send">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty Chat State (hidden by default) -->
+                <div class="empty-chat" style="display: none;">
+                    <i class="fas fa-comments"></i>
+                    <h3>No conversation selected</h3>
+                    <p>Select a contact from the list to start a conversation or search for a specific healthcare provider.</p>
+                    <button>Start a new conversation</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+            
+            // Initialize notification system
+            const notificationBell = document.querySelector('.notification-bell');
+            const notificationDropdown = document.querySelector('.notification-dropdown');
+            
+            if (notificationBell && notificationDropdown) {
+                notificationBell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (notificationDropdown.classList.contains('active')) {
+                        notificationDropdown.classList.remove('active');
+                    }
+                });
+                
+                notificationDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize admin dropdown
+            const adminDropdownToggle = document.querySelector('.admin-dropdown-toggle');
+            const adminDropdownMenu = document.querySelector('.admin-dropdown-menu');
+            
+            if (adminDropdownToggle && adminDropdownMenu) {
+                adminDropdownToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    adminDropdownMenu.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (adminDropdownMenu.classList.contains('active')) {
+                        adminDropdownMenu.classList.remove('active');
+                    }
+                });
+                
+                adminDropdownMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize contacts filter
+            const filterOptions = document.querySelectorAll('.filter-option');
+            const contactItems = document.querySelectorAll('.contact-item');
+            
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    filterOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterContacts(filter);
+                });
+            });
+            
+            function filterContacts(filter) {
+                contactItems.forEach(item => {
+                    if (filter === 'all') {
+                        item.style.display = 'flex';
+                    } else if (filter === 'unread') {
+                        const badge = item.querySelector('.contact-badge');
+                        if (badge) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    } else {
+                        // In a real application, contacts would have data attributes for their roles
+                        // For this demo, we'll just show all contacts for 'doctors' and 'staff' filters
+                        item.style.display = 'flex';
+                    }
+                });
+            }
+            
+            // Initialize contact selection
+            contactItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    contactItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const contactId = this.getAttribute('data-contact');
+                    loadConversation(contactId);
+                    
+                    // Remove unread badge when conversation is opened
+                    const badge = this.querySelector('.contact-badge');
+                    if (badge) {
+                        badge.remove();
+                    }
+                    
+                    // On mobile, hide the contacts sidebar after selection
+                    if (window.innerWidth <= 768) {
+                        document.querySelector('.contacts-sidebar').classList.remove('active');
+                    }
+                });
+            });
+            
+            function loadConversation(contactId) {
+                // In a real application, this would load the conversation from a database
+                // For this demo, we'll just show the existing conversation
+                const chatContainer = document.querySelector('.chat-container');
+                const emptyChat = document.querySelector('.empty-chat');
+                
+                chatContainer.style.display = 'flex';
+                emptyChat.style.display = 'none';
+                
+                // Update chat header with contact info
+                const contactItem = document.querySelector(`[data-contact="${contactId}"]`);
+                if (contactItem) {
+                    const contactName = contactItem.querySelector('.contact-name span').textContent;
+                    const contactAvatar = contactItem.querySelector('.contact-avatar img').src;
+                    const contactStatus = contactItem.querySelector('.contact-status').classList.contains('online') ? 'Online' : 'Offline';
+                    
+                    document.querySelector('.chat-contact-info h3').textContent = contactName;
+                    document.querySelector('.chat-contact-info p').textContent = contactStatus;
+                    document.querySelector('.chat-contact-avatar img').src = contactAvatar;
+                }
+            }
+            
+            // Initialize message input
+            const messageInput = document.querySelector('.message-input-field input');
+            const sendButton = document.querySelector('.message-input-send');
+            
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message) {
+                    // Create new message element
+                    const messageElement = document.createElement('div');
+                    messageElement.className = 'message sent';
+                    messageElement.innerHTML = `
+                        <div class="message-avatar">
+                            <img src="../images/patient-avatar.jpg" alt="Sarah Johnson">
+                        </div>
+                        <div class="message-content">
+                            <p class="message-text">${message}</p>
+                            <p class="message-time">${getCurrentTime()} <span class="message-status"><i class="fas fa-check"></i></span></p>
+                        </div>
+                    `;
+                    
+                    // Add message to chat
+                    const chatMessages = document.querySelector('.chat-messages');
+                    chatMessages.appendChild(messageElement);
+                    
+                    // Clear input
+                    messageInput.value = '';
+                    
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // Simulate reply after 2 seconds
+                    setTimeout(() => {
+                        simulateReply();
+                    }, 2000);
+                }
+            }
+            
+            if (sendButton && messageInput) {
+                sendButton.addEventListener('click', sendMessage);
+                
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+            }
+            
+            function getCurrentTime() {
+                const now = new Date();
+                let hours = now.getHours();
+                const minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                
+                const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+                
+                return `${hours}:${formattedMinutes} ${ampm}`;
+            }
+            
+            function simulateReply() {
+                // Create typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message received';
+                typingIndicator.innerHTML = `
+                    <div class="message-avatar">
+                        <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                    </div>
+                    <div class="typing-indicator">
+                        <span>Dr. Williams is typing</span>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add typing indicator to chat
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.appendChild(typingIndicator);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Remove typing indicator and add reply after 2 seconds
+                setTimeout(() => {
+                    chatMessages.removeChild(typingIndicator);
+                    
+                    // Create reply message
+                    const replyElement = document.createElement('div');
+                    replyElement.className = 'message received';
+                    replyElement.innerHTML = `
+                        <div class="message-avatar">
+                            <img src="../images/doctor-1.jpg" alt="Dr. Williams">
+                        </div>
+                        <div class="message-content">
+                            <p class="message-text">Yes, please continue with the same dosage. We'll reassess at your next appointment. Let me know if you experience any side effects.</p>
+                            <p class="message-time">${getCurrentTime()}</p>
+                        </div>
+                    `;
+                    
+                    // Add reply to chat
+                    chatMessages.appendChild(replyElement);
+                    
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // Update sent message status to read
+                    const sentMessages = document.querySelectorAll('.message.sent');
+                    const lastSentMessage = sentMessages[sentMessages.length - 1];
+                    if (lastSentMessage) {
+                        const statusIcon = lastSentMessage.querySelector('.message-status i');
+                        if (statusIcon) {
+                            statusIcon.className = 'fas fa-check-double';
+                        }
+                    }
+                }, 2000);
+            }
+            
+            // Initialize mobile contacts toggle
+            const mobileContactsToggle = document.querySelector('.mobile-contacts-toggle');
+            const contactsSidebar = document.querySelector('.contacts-sidebar');
+            
+            if (mobileContactsToggle && contactsSidebar) {
+                mobileContactsToggle.addEventListener('click', function() {
+                    contactsSidebar.classList.toggle('active');
+                    
+                    // Update toggle icon
+                    const toggleIcon = this.querySelector('i');
+                    if (contactsSidebar.classList.contains('active')) {
+                        toggleIcon.className = 'fas fa-chevron-left';
+                    } else {
+                        toggleIcon.className = 'fas fa-chevron-right';
+                    }
+                });
+            }
+            
+            // Initialize contacts search
+            const contactsSearch = document.querySelector('.contacts-search input');
+            
+            if (contactsSearch) {
+                contactsSearch.addEventListener('input', function() {
+                    const searchTerm = this.value.trim().toLowerCase();
+                    
+                    contactItems.forEach(item => {
+                        const contactName = item.querySelector('.contact-name span').textContent.toLowerCase();
+                        const contactPreview = item.querySelector('.contact-preview span').textContent.toLowerCase();
+                        
+                        if (contactName.includes(searchTerm) || contactPreview.includes(searchTerm)) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Initialize file and image attachment actions
+            const attachFileButton = document.querySelector('.message-input-action:first-child');
+            const insertImageButton = document.querySelector('.message-input-action:nth-child(2)');
+            
+            if (attachFileButton) {
+                attachFileButton.addEventListener('click', function() {
+                    alert('File attachment functionality would be implemented here.');
+                });
+            }
+            
+            if (insertImageButton) {
+                insertImageButton.addEventListener('click', function() {
+                    alert('Image insertion functionality would be implemented here.');
+                });
+            }
+            
+            // Initialize chat actions
+            const voiceCallButton = document.querySelector('.chat-action:first-child');
+            const videoCallButton = document.querySelector('.chat-action:nth-child(2)');
+            const moreOptionsButton = document.querySelector('.chat-action:nth-child(3)');
+            
+            if (voiceCallButton) {
+                voiceCallButton.addEventListener('click', function() {
+                    alert('Voice call functionality would be implemented here.');
+                });
+            }
+            
+            if (videoCallButton) {
+                videoCallButton.addEventListener('click', function() {
+                    alert('Video call functionality would be implemented here.');
+                });
+            }
+            
+            if (moreOptionsButton) {
+                moreOptionsButton.addEventListener('click', function() {
+                    alert('More options functionality would be implemented here.');
+                });
+            }
+            
+            // Initialize file download action
+            const fileDownloadButton = document.querySelector('.message-file-action');
+            
+            if (fileDownloadButton) {
+                fileDownloadButton.addEventListener('click', function() {
+                    alert('File download functionality would be implemented here.');
+                });
+            }
+            
+            // Initialize image preview
+            const messageImage = document.querySelector('.message-image');
+            
+            if (messageImage) {
+                messageImage.addEventListener('click', function() {
+                    alert('Image preview functionality would be implemented here.');
+                });
+            }
+            
+            // Scroll chat to bottom on load
+            const chatMessages = document.querySelector('.chat-messages');
+            if (chatMessages) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

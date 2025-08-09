@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="blood-drop">
+            <div class="drop"></div>
+            <div class="waves">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.svg" alt="LifeStream Logo">
+                <h1>LifeStream</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#donate">Donate</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="login.html" class="btn-login">Login</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animate-text">Donate Blood, <span>Save Lives</span></h1>
+                <p>Your donation can make a significant difference in someone's life. Join our mission to ensure blood supply for those in need.</p>
+                <div class="hero-buttons">
+                    <a href="donor/register.html" class="btn btn-primary">Become a Donor</a>
+                    <a href="patient/request.html" class="btn btn-secondary">Request Blood</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-image.svg" alt="Blood Donation Illustration">
+            </div>
+        </div>
+        <div class="blood-stats">
+            <div class="container">
+                <div class="stat-item">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>5000+</h3>
+                    <p>Registered Donors</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-tint"></i>
+                    <h3>10000+</h3>
+                    <p>Blood Donations</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-hospital-user"></i>
+                    <h3>8000+</h3>
+                    <p>Lives Saved</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-hospital"></i>
+                    <h3>50+</h3>
+                    <p>Partner Hospitals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About LifeStream</h2>
+                <p>Learn more about our mission and impact</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/about-image.svg" alt="About LifeStream">
+                </div>
+                <div class="about-text">
+                    <h3>Who We Are</h3>
+                    <p>LifeStream is a dedicated blood bank service committed to ensuring a safe and adequate blood supply for patients in need. We connect donors with recipients, making the process of blood donation and acquisition seamless and efficient.</p>
+                    
+                    <h3>Our Mission</h3>
+                    <p>Our mission is to save lives by providing a reliable and accessible blood supply system. We strive to raise awareness about the importance of blood donation and make the process as convenient as possible for donors.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Safe and Hygienic Donation Process</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Quick Response to Emergency Requests</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Transparent Blood Management System</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Regular Blood Donation Drives</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Comprehensive blood management solutions</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Blood Donation</h3>
+                    <p>Donate blood in a safe and comfortable environment with our trained professionals.</p>
+                    <a href="donor/register.html" class="btn-service">Donate Now</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <h3>Emergency Blood Supply</h3>
+                    <p>Quick response to emergency blood requirements for patients in critical condition.</p>
+                    <a href="patient/emergency.html" class="btn-service">Request Emergency</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Blood Drive Organization</h3>
+                    <p>We organize blood donation drives at schools, colleges, and corporate offices.</p>
+                    <a href="contact.html" class="btn-service">Organize Drive</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Blood Testing</h3>
+                    <p>Comprehensive testing of donated blood to ensure safety and compatibility.</p>
+                    <a href="services.html" class="btn-service">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3>Hospital Partnerships</h3>
+                    <p>We partner with hospitals to ensure a steady supply of blood for patients.</p>
+                    <a href="services.html" class="btn-service">Partner With Us</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Medical Consultation</h3>
+                    <p>Get expert advice on blood-related health issues from our medical professionals.</p>
+                    <a href="services.html" class="btn-service">Consult Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Process Section -->
+    <section class="donation-process">
+        <div class="container">
+            <div class="section-header">
+                <h2>Donation Process</h2>
+                <p>Simple steps to donate blood and save lives</p>
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Registration</h3>
+                    <p>Register as a donor with your personal and medical information.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3>Screening</h3>
+                    <p>Quick health check to ensure you're eligible to donate blood.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Donation</h3>
+                    <p>The actual blood donation process takes only about 10 minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h3>Refreshment</h3>
+                    <p>Rest and enjoy refreshments to replenish your energy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blood Availability Section -->
+    <section id="donate" class="blood-availability">
+        <div class="container">
+            <div class="section-header">
+                <h2>Blood Availability</h2>
+                <p>Current blood inventory status</p>
+            </div>
+            <div class="blood-types">
+                <div class="blood-type">
+                    <div class="blood-group a-positive">A+</div>
+                    <div class="availability high">High</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group a-negative">A-</div>
+                    <div class="availability low">Low</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group b-positive">B+</div>
+                    <div class="availability medium">Medium</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group b-negative">B-</div>
+                    <div class="availability critical">Critical</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group ab-positive">AB+</div>
+                    <div class="availability high">High</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group ab-negative">AB-</div>
+                    <div class="availability low">Low</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group o-positive">O+</div>
+                    <div class="availability medium">Medium</div>
+                </div>
+                <div class="blood-type">
+                    <div class="blood-group o-negative">O-</div>
+                    <div class="availability critical">Critical</div>
+                </div>
+            </div>
+            <div class="blood-request">
+                <h3>Need Blood?</h3>
+                <p>If you or someone you know needs blood, you can request it through our platform.</p>
+                <a href="patient/request.html" class="btn btn-primary">Request Blood</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Testimonials</h2>
+                <p>What our donors and recipients say about us</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="images/testimonial-1.svg" alt="Testimonial 1">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"I've been donating blood at LifeStream for over 5 years now. The process is always smooth, and the staff is incredibly friendly and professional. It feels great to know that my donation is helping save lives."</p>
+                            <div class="testimonial-author">
+                                <h4>John Doe</h4>
+                                <p>Regular Donor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="images/testimonial-2.svg" alt="Testimonial 2">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"When my daughter needed an emergency blood transfusion, LifeStream came through for us in our time of need. Their quick response and efficient service saved my daughter's life. I can't thank them enough."</p>
+                            <div class="testimonial-author">
+                                <h4>Jane Smith</h4>
+                                <p>Recipient's Parent</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="images/testimonial-3.svg" alt="Testimonial 3">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"As a hospital administrator, I've seen firsthand the impact of LifeStream's services. Their reliable blood supply has been crucial for our emergency department. The partnership has been invaluable for our patients."</p>
+                            <div class="testimonial-author">
+                                <h4>Dr. Robert Johnson</h4>
+                                <p>Hospital Administrator</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Our Location</h3>
+                            <p>123 Blood Bank Street, Medical District, City, Country</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h3>Phone Number</h3>
+                            <p>+1 (123) 456-7890</p>
+                            <p>Emergency: +1 (123) 456-7891</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email Address</h3>
+                            <p>info@lifestream.com</p>
+                            <p>support@lifestream.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Working Hours</h3>
+                            <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                            <p>Saturday: 9:00 AM - 5:00 PM</p>
+                            <p>Sunday: 10:00 AM - 2:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <h3>Follow Us</h3>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/logo.svg" alt="LifeStream Logo">
+                    <h2>LifeStream</h2>
+                    <p>Donate Blood, Save Lives</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#donate">Donate</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>For Donors</h3>
+                    <ul>
+                        <li><a href="donor/register.html">Register as Donor</a></li>
+                        <li><a href="donor/login.html">Donor Login</a></li>
+                        <li><a href="donor/eligibility.html">Eligibility</a></li>
+                        <li><a href="donor/faq.html">FAQs</a></li>
+                        <li><a href="donor/donation-history.html">Donation History</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>For Patients</h3>
+                    <ul>
+                        <li><a href="patient/register.html">Patient Registration</a></li>
+                        <li><a href="patient/login.html">Patient Login</a></li>
+                        <li><a href="patient/request.html">Request Blood</a></li>
+                        <li><a href="patient/emergency.html">Emergency Request</a></li>
+                        <li><a href="patient/blood-types.html">Blood Types Info</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter to get updates on blood donation drives and more.</p>
+                    <form id="newsletterForm">
+                        <input type="email" placeholder="Your Email Address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 LifeStream Blood Bank. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Settings page specific styles */
+        .settings-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .settings-sidebar {
+            width: 250px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .settings-nav {
+            padding: 15px;
+        }
+        
+        .settings-nav-item {
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .settings-nav-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .settings-nav-item.active {
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary-color);
+        }
+        
+        .settings-nav-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .settings-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .settings-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .settings-card-header {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .settings-card-title {
+            margin: 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .settings-card-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+        }
+        
+        .form-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .form-check:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-check-input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .form-check-label {
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #ced4da;
+            color: #495057;
+        }
+        
+        .btn-outline:hover {
+            background: #f8f9fa;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:focus + .toggle-slider {
+            box-shadow: 0 0 1px var(--primary-color);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .toggle-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-option:last-child {
+            margin-bottom: 0;
+        }
+        
+        .toggle-label {
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        
+        .color-option {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .color-circle.active {
+            border-color: #343a40;
+        }
+        
+        .color-red {
+            background: #dc3545;
+        }
+        
+        .color-blue {
+            background: #007bff;
+        }
+        
+        .color-green {
+            background: #28a745;
+        }
+        
+        .color-purple {
+            background: #6f42c1;
+        }
+        
+        .color-orange {
+            background: #fd7e14;
+        }
+        
+        .connected-app {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .connected-app:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .connected-app-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .connected-app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .connected-app-icon.google {
+            background: #DB4437;
+        }
+        
+        .connected-app-icon.facebook {
+            background: #4267B2;
+        }
+        
+        .connected-app-icon.apple {
+            background: #000;
+        }
+        
+        .connected-app-icon.fitbit {
+            background: #00B0B9;
+        }
+        
+        .connected-app-details h4 {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .connected-app-details p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .connected-app-action {
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .connected-app-action:hover {
+            color: #dc3545;
+        }
+        
+        .security-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .security-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .security-item-info h4 {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .security-item-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .security-item-action {
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .security-item-action:hover {
+            text-decoration: underline;
+        }
+        
+        .device-session {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .device-session:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .device-session-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .device-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #6c757d;
+            background: #f8f9fa;
+        }
+        
+        .device-details h4 {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+        }
+        
+        .device-current {
+            font-size: 0.75rem;
+            background: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+        
+        .device-details p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .device-session-action {
+            color: #dc3545;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .device-session-action:hover {
+            text-decoration: underline;
+        }
+        
+        .notification-category {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .notification-category:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .notification-category-title {
+            margin: 0 0 15px 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        @media (max-width: 768px) {
+            .settings-container {
+                flex-direction: column;
+            }
+            
+            .settings-sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>Sarah Johnson</h3>
+                <p>Patient</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="blood-requests.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Blood Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="medical-history.html">
+                        <i class="fas fa-notes-medical"></i>
+                        <span>Medical History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="appointments.html">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="hospitals.html">
+                        <i class="fas fa-hospital"></i>
+                        <span>Hospitals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="messages.html">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your blood request #REQ-1234 has been approved</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Appointment reminder: Tomorrow at 10:00 AM</p>
+                                    <span class="notification-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>New message from Dr. Williams</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+                        <span>Sarah Johnson</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Settings</h1>
+                <p>Manage your account settings and preferences.</p>
+            </div>
+
+            <!-- Settings Container -->
+            <div class="settings-container">
+                <!-- Settings Sidebar -->
+                <div class="settings-sidebar">
+                    <div class="settings-nav">
+                        <div class="settings-nav-item active" data-target="account">
+                            <i class="fas fa-user"></i>
+                            <span>Account</span>
+                        </div>
+                        <div class="settings-nav-item" data-target="security">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </div>
+                        <div class="settings-nav-item" data-target="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="settings-nav-item" data-target="appearance">
+                            <i class="fas fa-palette"></i>
+                            <span>Appearance</span>
+                        </div>
+                        <div class="settings-nav-item" data-target="connected-apps">
+                            <i class="fas fa-link"></i>
+                            <span>Connected Apps</span>
+                        </div>
+                        <div class="settings-nav-item" data-target="privacy">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Privacy</span>
+                        </div>
+                        <div class="settings-nav-item" data-target="sessions">
+                            <i class="fas fa-laptop"></i>
+                            <span>Sessions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <!-- Account Settings -->
+                    <div class="settings-section" id="account-settings">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Account Information</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="form-group">
+                                    <label class="form-label" for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" value="Sarah Johnson">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email Address</label>
+                                    <input type="email" class="form-control" id="email" value="sarah.johnson@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" value="(123) 456-7890">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dateOfBirth" value="1990-05-15">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="bloodType">Blood Type</label>
+                                    <select class="form-control" id="bloodType">
+                                        <option value="A+" selected>A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Address Information</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="form-group">
+                                    <label class="form-label" for="address">Street Address</label>
+                                    <input type="text" class="form-control" id="address" value="123 Main Street">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="city">City</label>
+                                    <input type="text" class="form-control" id="city" value="Central City">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="state">State</label>
+                                    <input type="text" class="form-control" id="state" value="CA">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="zipCode">Zip Code</label>
+                                    <input type="text" class="form-control" id="zipCode" value="90001">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="country">Country</label>
+                                    <input type="text" class="form-control" id="country" value="United States">
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Emergency Contact</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="form-group">
+                                    <label class="form-label" for="emergencyName">Contact Name</label>
+                                    <input type="text" class="form-control" id="emergencyName" value="John Johnson">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="emergencyRelation">Relationship</label>
+                                    <input type="text" class="form-control" id="emergencyRelation" value="Spouse">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="emergencyPhone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="emergencyPhone" value="(123) 456-7891">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="emergencyEmail">Email Address</label>
+                                    <input type="email" class="form-control" id="emergencyEmail" value="john.johnson@example.com">
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Delete Account</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <p>Once you delete your account, there is no going back. Please be certain.</p>
+                                <button class="btn btn-danger">Delete Account</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="settings-section" id="security-settings" style="display: none;">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Change Password</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="form-group">
+                                    <label class="form-label" for="currentPassword">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="newPassword">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword">
+                                    <p class="form-text">Password must be at least 8 characters long and include a mix of letters, numbers, and symbols.</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword">
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Update Password</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Two-Factor Authentication</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="toggle-option">
+                                    <span class="toggle-label">Enable Two-Factor Authentication</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <p class="form-text">Two-factor authentication adds an extra layer of security to your account by requiring more than just a password to sign in.</p>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Authenticator App</h4>
+                                        <p>Use an authenticator app to generate verification codes.</p>
+                                    </div>
+                                    <div class="security-item-action">Setup</div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>SMS Verification</h4>
+                                        <p>Receive verification codes via text message.</p>
+                                    </div>
+                                    <div class="security-item-action">Setup</div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Backup Codes</h4>
+                                        <p>Generate backup codes to use when you don't have access to your phone.</p>
+                                    </div>
+                                    <div class="security-item-action">Generate</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Security Questions</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="form-group">
+                                    <label class="form-label" for="securityQuestion1">Security Question 1</label>
+                                    <select class="form-control" id="securityQuestion1">
+                                        <option selected>What was the name of your first pet?</option>
+                                        <option>What is your mother's maiden name?</option>
+                                        <option>What was the make of your first car?</option>
+                                        <option>In what city were you born?</option>
+                                        <option>What is the name of your favorite childhood teacher?</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="securityAnswer1">Answer</label>
+                                    <input type="text" class="form-control" id="securityAnswer1" value="Fluffy">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="securityQuestion2">Security Question 2</label>
+                                    <select class="form-control" id="securityQuestion2">
+                                        <option>What was the name of your first pet?</option>
+                                        <option selected>What is your mother's maiden name?</option>
+                                        <option>What was the make of your first car?</option>
+                                        <option>In what city were you born?</option>
+                                        <option>What is the name of your favorite childhood teacher?</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="securityAnswer2">Answer</label>
+                                    <input type="text" class="form-control" id="securityAnswer2" value="Smith">
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="settings-section" id="notifications-settings" style="display: none;">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Notification Preferences</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="notification-category">
+                                    <h4 class="notification-category-title">Blood Requests</h4>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Request Status Updates</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Blood Availability Alerts</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Request Expiration Reminders</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="notification-category">
+                                    <h4 class="notification-category-title">Appointments</h4>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Appointment Reminders</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Appointment Confirmations</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Appointment Rescheduling</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="notification-category">
+                                    <h4 class="notification-category-title">Medical Updates</h4>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Test Results</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Medication Reminders</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Health Tips</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="notification-category">
+                                    <h4 class="notification-category-title">Messages</h4>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">New Messages</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Message Replies</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="notification-category">
+                                    <h4 class="notification-category-title">Notification Channels</h4>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Email Notifications</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">SMS Notifications</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <span class="toggle-label">Push Notifications</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appearance Settings -->
+                    <div class="settings-section" id="appearance-settings" style="display: none;">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Theme Settings</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="form-group">
+                                    <label class="form-label">Theme Mode</label>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="lightMode" name="themeMode" checked>
+                                        <label class="form-check-label" for="lightMode">Light Mode</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="darkMode" name="themeMode">
+                                        <label class="form-check-label" for="darkMode">Dark Mode</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="systemMode" name="themeMode">
+                                        <label class="form-check-label" for="systemMode">Use System Setting</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Accent Color</label>
+                                    <div class="color-option">
+                                        <div class="color-circle color-red"></div>
+                                        <div class="color-circle color-blue active"></div>
+                                        <div class="color-circle color-green"></div>
+                                        <div class="color-circle color-purple"></div>
+                                        <div class="color-circle color-orange"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Font Size</label>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="smallFont" name="fontSize">
+                                        <label class="form-check-label" for="smallFont">Small</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="mediumFont" name="fontSize" checked>
+                                        <label class="form-check-label" for="mediumFont">Medium</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="largeFont" name="fontSize">
+                                        <label class="form-check-label" for="largeFont">Large</label>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Reset to Default</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connected Apps Settings -->
+                    <div class="settings-section" id="connected-apps-settings" style="display: none;">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Connected Applications</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="connected-app">
+                                    <div class="connected-app-info">
+                                        <div class="connected-app-icon google">
+                                            <i class="fab fa-google"></i>
+                                        </div>
+                                        <div class="connected-app-details">
+                                            <h4>Google</h4>
+                                            <p>Connected on May 15, 2023</p>
+                                        </div>
+                                    </div>
+                                    <div class="connected-app-action">
+                                        <i class="fas fa-unlink"></i>
+                                    </div>
+                                </div>
+                                <div class="connected-app">
+                                    <div class="connected-app-info">
+                                        <div class="connected-app-icon facebook">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </div>
+                                        <div class="connected-app-details">
+                                            <h4>Facebook</h4>
+                                            <p>Connected on June 2, 2023</p>
+                                        </div>
+                                    </div>
+                                    <div class="connected-app-action">
+                                        <i class="fas fa-unlink"></i>
+                                    </div>
+                                </div>
+                                <div class="connected-app">
+                                    <div class="connected-app-info">
+                                        <div class="connected-app-icon fitbit">
+                                            <i class="fas fa-heartbeat"></i>
+                                        </div>
+                                        <div class="connected-app-details">
+                                            <h4>Fitbit</h4>
+                                            <p>Connected on July 10, 2023</p>
+                                        </div>
+                                    </div>
+                                    <div class="connected-app-action">
+                                        <i class="fas fa-unlink"></i>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Connect New App</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <div class="settings-section" id="privacy-settings" style="display: none;">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Privacy Settings</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="toggle-option">
+                                    <span class="toggle-label">Share my blood donation history with hospitals</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-option">
+                                    <span class="toggle-label">Allow doctors to view my medical history</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-option">
+                                    <span class="toggle-label">Share my contact information with blood banks</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-option">
+                                    <span class="toggle-label">Allow anonymous data usage for research</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-option">
+                                    <span class="toggle-label">Receive personalized health recommendations</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-outline">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Data Management</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Download Your Data</h4>
+                                        <p>Get a copy of your personal data.</p>
+                                    </div>
+                                    <div class="security-item-action">Download</div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Data Retention</h4>
+                                        <p>Manage how long we keep your data.</p>
+                                    </div>
+                                    <div class="security-item-action">Manage</div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Delete Your Data</h4>
+                                        <p>Permanently delete specific data from your account.</p>
+                                    </div>
+                                    <div class="security-item-action">Delete</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sessions Settings -->
+                    <div class="settings-section" id="sessions-settings" style="display: none;">
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Active Sessions</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="device-session">
+                                    <div class="device-session-info">
+                                        <div class="device-icon">
+                                            <i class="fas fa-laptop"></i>
+                                        </div>
+                                        <div class="device-details">
+                                            <h4>MacBook Pro <span class="device-current">Current</span></h4>
+                                            <p>Central City, CA • Last active now</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="device-session">
+                                    <div class="device-session-info">
+                                        <div class="device-icon">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                        <div class="device-details">
+                                            <h4>iPhone 13</h4>
+                                            <p>Central City, CA • Last active 2 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="device-session-action">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="device-session">
+                                    <div class="device-session-info">
+                                        <div class="device-icon">
+                                            <i class="fas fa-tablet-alt"></i>
+                                        </div>
+                                        <div class="device-details">
+                                            <h4>iPad Pro</h4>
+                                            <p>Central City, CA • Last active yesterday</p>
+                                        </div>
+                                    </div>
+                                    <div class="device-session-action">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-danger">Sign Out All Other Devices</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <div class="settings-card-header">
+                                <h3 class="settings-card-title">Login History</h3>
+                            </div>
+                            <div class="settings-card-body">
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Today, 10:30 AM</h4>
+                                        <p>MacBook Pro • Central City, CA</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Today, 8:15 AM</h4>
+                                        <p>iPhone 13 • Central City, CA</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>Yesterday, 7:45 PM</h4>
+                                        <p>iPad Pro • Central City, CA</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>July 15, 2023, 2:30 PM</h4>
+                                        <p>MacBook Pro • Central City, CA</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-item-info">
+                                        <h4>July 14, 2023, 9:15 AM</h4>
+                                        <p>iPhone 13 • Central City, CA</p>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline">View Full History</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+            
+            // Initialize notification system
+            const notificationBell = document.querySelector('.notification-bell');
+            const notificationDropdown = document.querySelector('.notification-dropdown');
+            
+            if (notificationBell && notificationDropdown) {
+                notificationBell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (notificationDropdown.classList.contains('active')) {
+                        notificationDropdown.classList.remove('active');
+                    }
+                });
+                
+                notificationDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize admin dropdown
+            const adminDropdownToggle = document.querySelector('.admin-dropdown-toggle');
+            const adminDropdownMenu = document.querySelector('.admin-dropdown-menu');
+            
+            if (adminDropdownToggle && adminDropdownMenu) {
+                adminDropdownToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    adminDropdownMenu.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (adminDropdownMenu.classList.contains('active')) {
+                        adminDropdownMenu.classList.remove('active');
+                    }
+                });
+                
+                adminDropdownMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize settings navigation
+            const settingsNavItems = document.querySelectorAll('.settings-nav-item');
+            const settingsSections = document.querySelectorAll('.settings-section');
+            
+            settingsNavItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // Update active nav item
+                    settingsNavItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Show target section
+                    settingsSections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(`${target}-settings`).style.display = 'block';
+                });
+            });
+            
+            // Initialize color options
+            const colorCircles = document.querySelectorAll('.color-circle');
+            
+            colorCircles.forEach(circle => {
+                circle.addEventListener('click', function() {
+                    colorCircles.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Initialize connected app actions
+            const connectedAppActions = document.querySelectorAll('.connected-app-action');
+            
+            connectedAppActions.forEach(action => {
+                action.addEventListener('click', function() {
+                    const appName = this.closest('.connected-app').querySelector('h4').textContent;
+                    if (confirm(`Are you sure you want to disconnect ${appName}?`)) {
+                        this.closest('.connected-app').remove();
+                    }
+                });
+            });
+            
+            // Initialize device session actions
+            const deviceSessionActions = document.querySelectorAll('.device-session-action');
+            
+            deviceSessionActions.forEach(action => {
+                action.addEventListener('click', function() {
+                    const deviceName = this.closest('.device-session').querySelector('h4').textContent.trim().split(' ')[0];
+                    if (confirm(`Are you sure you want to sign out from ${deviceName}?`)) {
+                        this.closest('.device-session').remove();
+                    }
+                });
+            });
+            
+            // Initialize security item actions
+            const securityItemActions = document.querySelectorAll('.security-item-action');
+            
+            securityItemActions.forEach(action => {
+                action.addEventListener('click', function() {
+                    const actionType = this.textContent.trim();
+                    alert(`${actionType} action would be implemented here.`);
+                });
+            });
+            
+            // Initialize form submissions
+            const formButtons = document.querySelectorAll('.btn-primary');
+            
+            formButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const form = this.closest('.settings-card-body');
+                    const formTitle = this.closest('.settings-card').querySelector('.settings-card-title').textContent;
+                    
+                    // Simulate form submission
+                    button.textContent = 'Saving...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        button.textContent = 'Save Changes';
+                        button.disabled = false;
+                        alert(`${formTitle} updated successfully!`);
+                    }, 1000);
+                });
+            });
+            
+            // Initialize delete account button
+            const deleteAccountButton = document.querySelector('.btn-danger');
+            
+            if (deleteAccountButton && deleteAccountButton.textContent.trim() === 'Delete Account') {
+                deleteAccountButton.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                        alert('Account deletion request submitted. You will receive a confirmation email shortly.');
+                        setTimeout(() => {
+                            window.location.href = '../login.html';
+                        }, 2000);
+                    }
+                });
+            }
+            
+            // Initialize sign out all devices button
+            const signOutAllButton = document.querySelector('.btn-danger');
+            
+            if (signOutAllButton && signOutAllButton.textContent.trim() === 'Sign Out All Other Devices') {
+                signOutAllButton.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to sign out from all other devices?')) {
+                        const deviceSessions = document.querySelectorAll('.device-session');
+                        deviceSessions.forEach(session => {
+                            if (!session.querySelector('.device-current')) {
+                                session.remove();
+                            }
+                        });
+                        alert('Successfully signed out from all other devices.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

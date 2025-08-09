@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>Sarah Johnson</h3>
+                <p>Patient</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="blood-requests.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Blood Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="medical-history.html">
+                        <i class="fas fa-notes-medical"></i>
+                        <span>Medical History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="appointments.html">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="hospitals.html">
+                        <i class="fas fa-hospital"></i>
+                        <span>Hospitals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="messages.html">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your blood request #REQ-1234 has been approved</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Appointment reminder: Tomorrow at 10:00 AM</p>
+                                    <span class="notification-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>New message from Dr. Williams</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your lab results are now available</p>
+                                    <span class="notification-time">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+                        <span>Sarah Johnson</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Patient Dashboard</h1>
+                <p>Welcome back, Sarah! Here's your health overview.</p>
+            </div>
+
+            <!-- Patient Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-card-icon patients">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Blood Type</h3>
+                        <p class="stat-number">O-</p>
+                        <p class="stat-change">Universal Donor</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon requests">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Blood Requests</h3>
+                        <p class="stat-number">3</p>
+                        <p class="stat-change positive">1 Active Request</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon donations">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Appointments</h3>
+                        <p class="stat-number">2</p>
+                        <p class="stat-change positive">Next: Tomorrow</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon donors">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Hospital</h3>
+                        <p class="stat-number">Central</p>
+                        <p class="stat-change">Dr. Williams</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Summary & Blood Request Status -->
+            <div class="dashboard-row">
+                <div class="dashboard-card medical-summary-card">
+                    <div class="card-header">
+                        <h2>Medical Summary</h2>
+                        <a href="medical-history.html" class="view-all">View Full History</a>
+                    </div>
+                    <div class="medical-summary-content">
+                        <div class="medical-info">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Patient ID</h4>
+                                    <p>#P-7890</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Date of Birth</h4>
+                                    <p>May 15, 1985</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-weight"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Weight</h4>
+                                    <p>65 kg</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-ruler-vertical"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Height</h4>
+                                    <p>168 cm</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medical-conditions">
+                            <h3>Medical Conditions</h3>
+                            <ul class="conditions-list">
+                                <li>
+                                    <span class="condition-name">Anemia</span>
+                                    <span class="condition-status active">Active</span>
+                                </li>
+                                <li>
+                                    <span class="condition-name">Hypertension</span>
+                                    <span class="condition-status controlled">Controlled</span>
+                                </li>
+                                <li>
+                                    <span class="condition-name">Allergies</span>
+                                    <span class="condition-status active">Penicillin</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="medications">
+                            <h3>Current Medications</h3>
+                            <ul class="medications-list">
+                                <li>
+                                    <div class="medication-info">
+                                        <span class="medication-name">Iron Supplement</span>
+                                        <span class="medication-dosage">200mg</span>
+                                    </div>
+                                    <span class="medication-schedule">Once daily</span>
+                                </li>
+                                <li>
+                                    <div class="medication-info">
+                                        <span class="medication-name">Lisinopril</span>
+                                        <span class="medication-dosage">10mg</span>
+                                    </div>
+                                    <span class="medication-schedule">Once daily</span>
+                                </li>
+                                <li>
+                                    <div class="medication-info">
+                                        <span class="medication-name">Vitamin B12</span>
+                                        <span class="medication-dosage">1000mcg</span>
+                                    </div>
+                                    <span class="medication-schedule">Once weekly</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blood Request Status -->
+                <div class="dashboard-card blood-request-card">
+                    <div class="card-header">
+                        <h2>Blood Request Status</h2>
+                        <a href="blood-requests.html" class="view-all">View All</a>
+                    </div>
+                    <div class="blood-request-content">
+                        <div class="active-request">
+                            <div class="request-header">
+                                <h3>Active Request</h3>
+                                <span class="request-id">#REQ-1234</span>
+                            </div>
+                            <div class="request-details">
+                                <div class="request-info">
+                                    <div class="info-row">
+                                        <span class="info-label">Blood Type:</span>
+                                        <span class="info-value">O-</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Units Requested:</span>
+                                        <span class="info-value">2</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Date Requested:</span>
+                                        <span class="info-value">June 12, 2023</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Priority:</span>
+                                        <span class="info-value high-priority">High</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Status:</span>
+                                        <span class="status-badge approved">Approved</span>
+                                    </div>
+                                </div>
+                                <div class="request-progress">
+                                    <div class="progress-step completed">
+                                        <div class="step-icon">
+                                            <i class="fas fa-clipboard-check"></i>
+                                        </div>
+                                        <div class="step-info">
+                                            <h4>Request Submitted</h4>
+                                            <p>June 12, 2023</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress-step completed">
+                                        <div class="step-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="step-info">
+                                            <h4>Request Approved</h4>
+                                            <p>June 12, 2023</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress-step active">
+                                        <div class="step-icon">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                        <div class="step-info">
+                                            <h4>Matching Donors</h4>
+                                            <p>In Progress</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress-step">
+                                        <div class="step-icon">
+                                            <i class="fas fa-truck"></i>
+                                        </div>
+                                        <div class="step-info">
+                                            <h4>Blood Delivery</h4>
+                                            <p>Pending</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress-step">
+                                        <div class="step-icon">
+                                            <i class="fas fa-check-double"></i>
+                                        </div>
+                                        <div class="step-info">
+                                            <h4>Completed</h4>
+                                            <p>Pending</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="request-actions">
+                                    <button class="btn secondary-btn"><i class="fas fa-eye"></i> View Details</button>
+                                    <button class="btn primary-btn"><i class="fas fa-phone"></i> Contact Hospital</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-request-cta">
+                            <h3>Need Blood?</h3>
+                            <p>Submit a new blood request for your treatment.</p>
+                            <a href="new-request.html" class="btn primary-btn"><i class="fas fa-plus"></i> New Blood Request</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments & Recent Activity -->
+            <div class="dashboard-row">
+                <!-- Upcoming Appointments -->
+                <div class="dashboard-card appointments-card">
+                    <div class="card-header">
+                        <h2>Upcoming Appointments</h2>
+                        <a href="appointments.html" class="view-all">View All</a>
+                    </div>
+                    <div class="appointments-content">
+                        <div class="appointment-item">
+                            <div class="appointment-date">
+                                <div class="date-day">15</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="appointment-info">
+                                <h3>Blood Transfusion</h3>
+                                <p><i class="fas fa-clock"></i> 10:00 AM - 12:00 PM</p>
+                                <p><i class="fas fa-hospital"></i> Central Hospital, Room 305</p>
+                                <p><i class="fas fa-user-md"></i> Dr. Williams</p>
+                                <div class="appointment-actions">
+                                    <button class="btn small-btn secondary-btn"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                                    <button class="btn small-btn primary-btn"><i class="fas fa-check"></i> Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointment-item">
+                            <div class="appointment-date">
+                                <div class="date-day">22</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="appointment-info">
+                                <h3>Follow-up Consultation</h3>
+                                <p><i class="fas fa-clock"></i> 2:30 PM - 3:30 PM</p>
+                                <p><i class="fas fa-hospital"></i> Central Hospital, Room 210</p>
+                                <p><i class="fas fa-user-md"></i> Dr. Williams</p>
+                                <div class="appointment-actions">
+                                    <button class="btn small-btn secondary-btn"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                                    <button class="btn small-btn primary-btn"><i class="fas fa-check"></i> Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add-appointment">
+                            <a href="appointments.html" class="btn secondary-btn"><i class="fas fa-plus"></i> Schedule New Appointment</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="dashboard-card activity-card">
+                    <div class="card-header">
+                        <h2>Recent Activity</h2>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-icon">
+                                    <i class="fas fa-clipboard-check"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h4>Blood Request Approved</h4>
+                                    <p>Your blood request #REQ-1234 has been approved.</p>
+                                    <span class="timeline-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h4>Lab Results Updated</h4>
+                                    <p>Your hemoglobin levels have improved since last test.</p>
+                                    <span class="timeline-time">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h4>Medication Updated</h4>
+                                    <p>Dr. Williams updated your iron supplement dosage.</p>
+                                    <span class="timeline-time">3 days ago</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h4>Doctor Appointment</h4>
+                                    <p>You had a consultation with Dr. Williams.</p>
+                                    <span class="timeline-time">1 week ago</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h4>Blood Request Submitted</h4>
+                                    <p>You submitted a request for 2 units of O- blood.</p>
+                                    <span class="timeline-time">1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nearby Hospitals -->
+            <div class="dashboard-row">
+                <div class="dashboard-card hospitals-card">
+                    <div class="card-header">
+                        <h2>Nearby Hospitals</h2>
+                        <a href="hospitals.html" class="view-all">View All</a>
+                    </div>
+                    <div class="hospitals-content">
+                        <div class="hospitals-map">
+                            <!-- Map would be integrated here in a real application -->
+                            <div class="map-placeholder">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <p>Map showing nearby hospitals with blood availability</p>
+                            </div>
+                        </div>
+                        <div class="hospitals-list">
+                            <div class="hospital-item">
+                                <div class="hospital-icon">
+                                    <i class="fas fa-hospital"></i>
+                                </div>
+                                <div class="hospital-info">
+                                    <h3>Central Hospital</h3>
+                                    <p><i class="fas fa-map-marker-alt"></i> 123 Main St, Cityville (1.2 miles)</p>
+                                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                                    <div class="blood-availability">
+                                        <span class="blood-type available">O-</span>
+                                        <span class="blood-type available">A+</span>
+                                        <span class="blood-type limited">B-</span>
+                                        <span class="blood-type available">AB+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hospital-item">
+                                <div class="hospital-icon">
+                                    <i class="fas fa-hospital"></i>
+                                </div>
+                                <div class="hospital-info">
+                                    <h3>Memorial Medical Center</h3>
+                                    <p><i class="fas fa-map-marker-alt"></i> 456 Oak Ave, Townsburg (3.5 miles)</p>
+                                    <p><i class="fas fa-phone"></i> (555) 987-6543</p>
+                                    <div class="blood-availability">
+                                        <span class="blood-type unavailable">O-</span>
+                                        <span class="blood-type available">A+</span>
+                                        <span class="blood-type available">B+</span>
+                                        <span class="blood-type limited">AB-</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hospital-item">
+                                <div class="hospital-icon">
+                                    <i class="fas fa-hospital"></i>
+                                </div>
+                                <div class="hospital-info">
+                                    <h3>Community Health Center</h3>
+                                    <p><i class="fas fa-map-marker-alt"></i> 789 Pine St, Villageton (5.8 miles)</p>
+                                    <p><i class="fas fa-phone"></i> (555) 456-7890</p>
+                                    <div class="blood-availability">
+                                        <span class="blood-type limited">O-</span>
+                                        <span class="blood-type available">A-</span>
+                                        <span class="blood-type available">B+</span>
+                                        <span class="blood-type available">AB+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/patient-dashboard.js"></script>
+</body>
+</html>

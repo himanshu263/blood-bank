@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Blood Request - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/patient-dashboard.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles specific to the request form */
+        .form-section {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #343a40;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 15px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group .hint {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-right: 8px;
+            width: auto;
+        }
+        
+        .priority-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .priority-option {
+            flex: 1;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .priority-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .priority-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(220, 53, 69, 0.05);
+        }
+        
+        .priority-option i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #6c757d;
+        }
+        
+        .priority-option.selected i {
+            color: var(--primary-color);
+        }
+        
+        .priority-option h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+        
+        .priority-option p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .priority-option.selected h4 {
+            color: var(--primary-color);
+        }
+        
+        .blood-type-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .blood-type-option {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .blood-type-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .blood-type-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(220, 53, 69, 0.05);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .form-actions .btn {
+            padding: 12px 25px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ced4da;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background: rgba(220, 53, 69, 0.02);
+        }
+        
+        .upload-area i {
+            font-size: 2rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .upload-area p {
+            margin: 0;
+            color: #6c757d;
+        }
+        
+        .upload-area .upload-hint {
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        .uploaded-files {
+            margin-top: 15px;
+        }
+        
+        .uploaded-file {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+        }
+        
+        .uploaded-file i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .uploaded-file .file-name {
+            flex: 1;
+        }
+        
+        .uploaded-file .remove-file {
+            color: #dc3545;
+            cursor: pointer;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .summary-value.highlight {
+            color: var(--primary-color);
+        }
+        
+        .confirmation-message {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .confirmation-icon {
+            font-size: 3rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-message h2 {
+            margin: 0 0 15px 0;
+            color: #28a745;
+        }
+        
+        .confirmation-message p {
+            margin: 0 0 20px 0;
+            color: #6c757d;
+        }
+        
+        /* Blood Donation Illustration */
+        .blood-donation-illustration {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .animated-illustration {
+            max-width: 100%;
+            height: auto;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* Animation Classes */
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .animate-scale-in {
+            animation: scaleIn 0.5s ease forwards;
+        }
+        
+        .animate-slide-in {
+            animation: slideInRight 0.5s ease forwards;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .blood-type-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .priority-options {
+                flex-direction: column;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+            
+            .blood-donation-illustration {
+                margin-bottom: 20px;
+            }
+            
+            .animated-illustration {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/patient-avatar.svg" alt="Patient Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>Sarah Johnson</h3>
+                <p>Patient</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="blood-requests.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Blood Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="medical-history.html">
+                        <i class="fas fa-notes-medical"></i>
+                        <span>Medical History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="appointments.html">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="hospitals.html">
+                        <i class="fas fa-hospital"></i>
+                        <span>Hospitals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="messages.html">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="theme-toggle" id="themeToggle">
+                    <img src="../images/dark-mode-icon.svg" alt="Toggle Theme" id="themeIcon">
+                </div>
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your blood request #REQ-1234 has been approved</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Appointment reminder: Tomorrow at 10:00 AM</p>
+                                    <span class="notification-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>New message from Dr. Williams</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/patient-avatar.svg" alt="Patient Avatar">
+                        <span>Sarah Johnson</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>New Blood Request</h1>
+                <p>Please fill out the form below to submit a new blood request.</p>
+            </div>
+
+            <!-- Multi-step Form -->
+            <div class="form-container" id="requestForm">
+                <!-- Blood Donation Illustration -->
+                <div class="blood-donation-illustration">
+                    <img src="../images/blood-donation.svg" alt="Blood Donation Illustration" class="animated-illustration">
+                </div>
+                <!-- Step 1: Patient Information -->
+                <div class="form-step" data-step="1">
+                    <div class="form-section">
+                        <h2>Patient Information</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="patientName">Patient Name</label>
+                                <input type="text" id="patientName" value="Sarah Johnson" readonly>
+                                <p class="hint">Your registered name</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="patientId">Patient ID</label>
+                                <input type="text" id="patientId" value="#P-7890" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bloodType">Blood Type</label>
+                                <div class="blood-type-selector">
+                                    <div class="blood-type-option" data-type="A+">A+</div>
+                                    <div class="blood-type-option" data-type="A-">A-</div>
+                                    <div class="blood-type-option" data-type="B+">B+</div>
+                                    <div class="blood-type-option" data-type="B-">B-</div>
+                                    <div class="blood-type-option" data-type="AB+">AB+</div>
+                                    <div class="blood-type-option" data-type="AB-">AB-</div>
+                                    <div class="blood-type-option selected" data-type="O+">O+</div>
+                                    <div class="blood-type-option" data-type="O-">O-</div>
+                                </div>
+                                <input type="hidden" id="bloodType" value="O+">
+                            </div>
+                            <div class="form-group">
+                                <label for="unitsRequired">Units Required</label>
+                                <select id="unitsRequired">
+                                    <option value="1">1 Unit</option>
+                                    <option value="2" selected>2 Units</option>
+                                    <option value="3">3 Units</option>
+                                    <option value="4">4 Units</option>
+                                    <option value="5">5 Units</option>
+                                    <option value="6+">6+ Units</option>
+                                </select>
+                                <p class="hint">1 unit = 450-500 ml of blood</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Request Priority</label>
+                            <div class="priority-options">
+                                <div class="priority-option" data-priority="standard">
+                                    <i class="fas fa-clock"></i>
+                                    <h4>Standard</h4>
+                                    <p>For scheduled procedures (7-14 days)</p>
+                                </div>
+                                <div class="priority-option" data-priority="urgent">
+                                    <i class="fas fa-bolt"></i>
+                                    <h4>Urgent</h4>
+                                    <p>Required within 48-72 hours</p>
+                                </div>
+                                <div class="priority-option selected" data-priority="emergency">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <h4>Emergency</h4>
+                                    <p>Required immediately (within 24 hours)</p>
+                                </div>
+                            </div>
+                            <input type="hidden" id="requestPriority" value="emergency">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary-btn" id="cancelRequest">Cancel</button>
+                        <button type="button" class="btn primary-btn" id="nextToStep2">Next: Medical Details</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Medical Details -->
+                <div class="form-step" data-step="2" style="display: none;">
+                    <div class="form-section">
+                        <h2>Medical Details</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="hospital">Hospital/Medical Facility</label>
+                                <select id="hospital">
+                                    <option value="central">Central Hospital</option>
+                                    <option value="memorial">Memorial Medical Center</option>
+                                    <option value="community">Community Health Center</option>
+                                    <option value="other">Other (specify below)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="otherHospital">Other Hospital (if applicable)</label>
+                                <input type="text" id="otherHospital" placeholder="Enter hospital name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="doctorName">Attending Physician</label>
+                                <input type="text" id="doctorName" value="Dr. Williams">
+                            </div>
+                            <div class="form-group">
+                                <label for="doctorContact">Physician Contact</label>
+                                <input type="text" id="doctorContact" placeholder="Phone or email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="medicalReason">Medical Reason for Request</label>
+                            <select id="medicalReason">
+                                <option value="surgery">Surgery</option>
+                                <option value="anemia" selected>Anemia Treatment</option>
+                                <option value="accident">Accident/Trauma</option>
+                                <option value="cancer">Cancer Treatment</option>
+                                <option value="childbirth">Childbirth Complications</option>
+                                <option value="other">Other Medical Condition</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="additionalDetails">Additional Medical Details</label>
+                            <textarea id="additionalDetails" placeholder="Please provide any additional details about the medical condition or requirements">Severe anemia requiring blood transfusion. Hemoglobin levels at 7.2 g/dL.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Medical Documents (optional)</label>
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-file-upload"></i>
+                                <p>Drag & drop files here or click to browse</p>
+                                <p class="upload-hint">Accepted formats: PDF, JPG, PNG (Max 5MB)</p>
+                            </div>
+                            <div class="uploaded-files" id="uploadedFiles">
+                                <div class="uploaded-file">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span class="file-name">Doctor_Prescription.pdf</span>
+                                    <span class="remove-file"><i class="fas fa-times"></i></span>
+                                </div>
+                                <div class="uploaded-file">
+                                    <i class="fas fa-file-medical-alt"></i>
+                                    <span class="file-name">Lab_Results.pdf</span>
+                                    <span class="remove-file"><i class="fas fa-times"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary-btn" id="backToStep1">Back</button>
+                        <button type="button" class="btn primary-btn" id="nextToStep3">Next: Review & Submit</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Review & Submit -->
+                <div class="form-step" data-step="3" style="display: none;">
+                    <div class="form-section">
+                        <h2>Review Your Request</h2>
+                        <div class="request-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Patient Name</span>
+                                <span class="summary-value">Sarah Johnson</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Patient ID</span>
+                                <span class="summary-value">#P-7890</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Blood Type</span>
+                                <span class="summary-value highlight">O+</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Units Required</span>
+                                <span class="summary-value">2 Units</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Priority</span>
+                                <span class="summary-value highlight">Emergency (within 24 hours)</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Hospital</span>
+                                <span class="summary-value">Central Hospital</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Attending Physician</span>
+                                <span class="summary-value">Dr. Williams</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Medical Reason</span>
+                                <span class="summary-value">Anemia Treatment</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Additional Details</span>
+                                <span class="summary-value">Severe anemia requiring blood transfusion. Hemoglobin levels at 7.2 g/dL.</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Uploaded Documents</span>
+                                <span class="summary-value">2 files</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmationCheckbox" class="checkbox-label">
+                                <input type="checkbox" id="confirmationCheckbox" checked>
+                                I confirm that all the information provided is accurate and complete to the best of my knowledge.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary-btn" id="backToStep2">Back</button>
+                        <button type="button" class="btn primary-btn" id="submitRequest">Submit Request</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Confirmation -->
+                <div class="form-step" data-step="4" style="display: none;">
+                    <div class="confirmation-message">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2>Request Submitted Successfully!</h2>
+                        <p>Your blood request has been submitted and is being processed. You will receive notifications about the status of your request.</p>
+                        <p><strong>Request ID:</strong> <span id="generatedRequestId">#REQ-5678</span></p>
+                        <p><strong>Estimated Response Time:</strong> Within 24 hours</p>
+                        <div class="form-actions" style="justify-content: center;">
+                            <a href="dashboard.html" class="btn secondary-btn">Back to Dashboard</a>
+                            <a href="blood-requests.html" class="btn primary-btn">View All Requests</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme from localStorage or default to light
+            initTheme();
+            
+            // Initialize form navigation
+            initFormNavigation();
+            
+            // Initialize blood type selector
+            initBloodTypeSelector();
+            
+            // Initialize priority selector
+            initPrioritySelector();
+            
+            // Initialize file upload
+            initFileUpload();
+            
+            // Initialize mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+            
+            // Initialize notification system
+            const notificationBell = document.querySelector('.notification-bell');
+            const notificationDropdown = document.querySelector('.notification-dropdown');
+            
+            if (notificationBell && notificationDropdown) {
+                notificationBell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (notificationDropdown.classList.contains('active')) {
+                        notificationDropdown.classList.remove('active');
+                    }
+                });
+                
+                notificationDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize admin dropdown
+            const adminDropdownToggle = document.querySelector('.admin-dropdown-toggle');
+            const adminDropdownMenu = document.querySelector('.admin-dropdown-menu');
+            
+            if (adminDropdownToggle && adminDropdownMenu) {
+                adminDropdownToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    adminDropdownMenu.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (adminDropdownMenu.classList.contains('active')) {
+                        adminDropdownMenu.classList.remove('active');
+                    }
+                });
+                
+                adminDropdownMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
+            
+            // Add animations to form sections
+            addAnimations();
+        });
+        
+        // Initialize theme
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+        }
+        
+        // Toggle between light and dark themes
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            updateThemeIcon(newTheme);
+            
+            // Add animation to theme toggle
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.classList.add('animate-pulse');
+            setTimeout(() => {
+                themeIcon.classList.remove('animate-pulse');
+            }, 1000);
+        }
+        
+        // Update theme icon based on current theme
+        function updateThemeIcon(theme) {
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                if (theme === 'dark') {
+                    themeIcon.src = '../images/light-mode-icon.svg';
+                } else {
+                    themeIcon.src = '../images/dark-mode-icon.svg';
+                }
+            }
+        }
+        
+        // Add animations to form elements
+        function addAnimations() {
+            // Add animation classes to form sections
+            const formSections = document.querySelectorAll('.form-section');
+            formSections.forEach((section, index) => {
+                section.classList.add('animate-fade-in');
+                section.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Add animation to blood type options
+            const bloodTypeOptions = document.querySelectorAll('.blood-type-option');
+            bloodTypeOptions.forEach((option, index) => {
+                option.classList.add('animate-scale-in');
+                option.style.animationDelay = `${0.2 + index * 0.05}s`;
+            });
+            
+            // Add animation to priority options
+            const priorityOptions = document.querySelectorAll('.priority-option');
+            priorityOptions.forEach((option, index) => {
+                option.classList.add('animate-scale-in');
+                option.style.animationDelay = `${0.2 + index * 0.1}s`;
+            });
+            
+            // Add animation to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach((button, index) => {
+                button.classList.add('animate-fade-in');
+                button.style.animationDelay = `${0.5 + index * 0.1}s`;
+            });
+        }
+        
+        // Form navigation functions
+        function initFormNavigation() {
+            const nextToStep2 = document.getElementById('nextToStep2');
+            const backToStep1 = document.getElementById('backToStep1');
+            const nextToStep3 = document.getElementById('nextToStep3');
+            const backToStep2 = document.getElementById('backToStep2');
+            const submitRequest = document.getElementById('submitRequest');
+            const cancelRequest = document.getElementById('cancelRequest');
+            
+            // Next to step 2
+            nextToStep2.addEventListener('click', function() {
+                showStep(2);
+            });
+            
+            // Back to step 1
+            backToStep1.addEventListener('click', function() {
+                showStep(1);
+            });
+            
+            // Next to step 3
+            nextToStep3.addEventListener('click', function() {
+                // Update summary values
+                document.querySelector('.summary-value.highlight:nth-of-type(1)').textContent = 
+                    document.getElementById('bloodType').value;
+                
+                const unitsSelect = document.getElementById('unitsRequired');
+                const unitsText = unitsSelect.options[unitsSelect.selectedIndex].text;
+                document.querySelectorAll('.summary-value')[3].textContent = unitsText;
+                
+                const priorityValue = document.getElementById('requestPriority').value;
+                let priorityText = 'Standard (7-14 days)';
+                if (priorityValue === 'urgent') {
+                    priorityText = 'Urgent (within 48-72 hours)';
+                } else if (priorityValue === 'emergency') {
+                    priorityText = 'Emergency (within 24 hours)';
+                }
+                document.querySelectorAll('.summary-value')[4].textContent = priorityText;
+                
+                const hospitalSelect = document.getElementById('hospital');
+                const hospitalText = hospitalSelect.options[hospitalSelect.selectedIndex].text;
+                document.querySelectorAll('.summary-value')[5].textContent = hospitalText;
+                
+                document.querySelectorAll('.summary-value')[6].textContent = 
+                    document.getElementById('doctorName').value;
+                
+                const reasonSelect = document.getElementById('medicalReason');
+                const reasonText = reasonSelect.options[reasonSelect.selectedIndex].text;
+                document.querySelectorAll('.summary-value')[7].textContent = reasonText;
+                
+                document.querySelectorAll('.summary-value')[8].textContent = 
+                    document.getElementById('additionalDetails').value;
+                
+                showStep(3);
+            });
+            
+            // Back to step 2
+            backToStep2.addEventListener('click', function() {
+                showStep(2);
+            });
+            
+            // Submit request
+            submitRequest.addEventListener('click', function() {
+                // Generate a random request ID
+                const requestId = '#REQ-' + Math.floor(1000 + Math.random() * 9000);
+                document.getElementById('generatedRequestId').textContent = requestId;
+                
+                showStep(4);
+                
+                // Add animations to confirmation step
+                const confirmationIcon = document.querySelector('.confirmation-icon');
+                const confirmationTitle = document.querySelector('.confirmation-message h2');
+                const confirmationText = document.querySelector('.confirmation-message p');
+                
+                if (confirmationIcon && confirmationTitle && confirmationText) {
+                    confirmationIcon.classList.add('animate-scale-in');
+                    confirmationTitle.classList.add('animate-fade-in');
+                    confirmationTitle.style.animationDelay = '0.2s';
+                    confirmationText.classList.add('animate-fade-in');
+                    confirmationText.style.animationDelay = '0.4s';
+                }
+            });
+            
+            // Cancel request
+            cancelRequest.addEventListener('click', function() {
+                if (confirm('Are you sure you want to cancel this request? All entered data will be lost.')) {
+                    window.location.href = 'dashboard.html';
+                }
+            });
+        }
+        
+        function showStep(stepNumber) {
+            const steps = document.querySelectorAll('.form-step');
+            steps.forEach(step => {
+                step.style.display = 'none';
+            });
+            
+            const currentStep = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
+            currentStep.style.display = 'block';
+            
+            // Add entrance animation to the current step
+            currentStep.classList.add('animate-fade-in');
+            
+            // Scroll to top of form
+            currentStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Blood type selector
+        function initBloodTypeSelector() {
+            const bloodTypeOptions = document.querySelectorAll('.blood-type-option');
+            const bloodTypeInput = document.getElementById('bloodType');
+            
+            bloodTypeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    bloodTypeOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update hidden input value
+                    bloodTypeInput.value = this.getAttribute('data-type');
+                    
+                    // Add pulse animation
+                    this.classList.add('animate-pulse');
+                    setTimeout(() => {
+                        this.classList.remove('animate-pulse');
+                    }, 1000);
+                });
+            });
+        }
+        
+        // Priority selector
+        function initPrioritySelector() {
+            const priorityOptions = document.querySelectorAll('.priority-option');
+            const priorityInput = document.getElementById('requestPriority');
+            
+            priorityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    priorityOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update hidden input value
+                    priorityInput.value = this.getAttribute('data-priority');
+                    
+                    // Add pulse animation
+                    this.classList.add('animate-pulse');
+                    setTimeout(() => {
+                        this.classList.remove('animate-pulse');
+                    }, 1000);
+                });
+            });
+        }
+        
+        // File upload
+        function initFileUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const uploadedFiles = document.getElementById('uploadedFiles');
+            
+            uploadArea.addEventListener('click', function() {
+                // In a real application, this would open a file picker
+                alert('This would open a file picker in the actual application.');
+            });
+            
+            // Handle drag and drop events
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+                this.classList.add('animate-pulse');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                this.classList.remove('active');
+                this.classList.remove('animate-pulse');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                this.classList.remove('animate-pulse');
+                
+                // In a real application, this would handle the dropped files
+                alert('File drop detected. This would process the files in the actual application.');
+            });
+            
+            // Handle remove file buttons
+            const removeButtons = document.querySelectorAll('.remove-file');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileItem = this.closest('.uploaded-file');
+                    fileItem.classList.add('animate-fade-in');
+                    fileItem.style.animationDirection = 'reverse';
+                    
+                    setTimeout(() => {
+                        fileItem.remove();
+                    }, 500);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

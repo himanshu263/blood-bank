@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <!-- Background -->
+  <rect width="500" height="500" fill="#f5f5f5"/>
+  
+  <!-- Hospital Building -->
+  <rect x="150" y="150" width="200" height="200" fill="#fff" stroke="#333" stroke-width="2"/>
+  <rect x="225" y="300" width="50" height="50" fill="#fff" stroke="#333" stroke-width="2"/>
+  <rect x="175" y="175" width="40" height="40" fill="#64b5f6" stroke="#333" stroke-width="1"/>
+  <rect x="235" y="175" width="40" height="40" fill="#64b5f6" stroke="#333" stroke-width="1"/>
+  <rect x="285" y="175" width="40" height="40" fill="#64b5f6" stroke="#333" stroke-width="1"/>
+  <rect x="175" y="235" width="40" height="40" fill="#64b5f6" stroke="#333" stroke-width="1"/>
+  <rect x="235" y="235" width="40" height="40" fill="#64b5f6" stroke="#333" stroke-width="1"/>
+  <rect x="285" y="235" width="40" height="40" fill="#64b5f6" stroke="#333" stroke-width="1"/>
+  
+  <!-- Red Cross -->
+  <rect x="235" y="100" width="30" height="80" fill="#f44336"/>
+  <rect x="210" y="125" width="80" height="30" fill="#f44336"/>
+  
+  <!-- Blood Bag -->
+  <path d="M100 200 L 130 200 L 130 300 Q 115 310 100 300 Z" fill="#ef5350" stroke="#333" stroke-width="2"/>
+  <path d="M110 200 L 110 180 L 120 180 L 120 200" fill="none" stroke="#333" stroke-width="2"/>
+  <text x="107" y="250" font-family="Arial" font-size="20" fill="white">A+</text>
+  
+  <!-- Blood Drop Animation -->
+  <circle cx="115" cy="350" r="15" fill="#ef5350">
+    <animate attributeName="cy" from="350" to="400" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Doctor/Nurse -->
+  <circle cx="350" cy="350" r="30" fill="#ffccbc"/> <!-- Head -->
+  <rect x="335" y="380" width="30" height="60" fill="#bbdefb"/> <!-- Body -->
+  <rect x="335" y="380" width="30" height="15" fill="#ffffff"/> <!-- Collar -->
+  <line x1="335" y1="395" x2="365" y2="395" stroke="#333" stroke-width="1"/>
+  <path d="M335 380 L 320 420" stroke="#bbdefb" stroke-width="10" stroke-linecap="round"/> <!-- Left Arm -->
+  <path d="M365 380 L 380 420" stroke="#bbdefb" stroke-width="10" stroke-linecap="round"/> <!-- Right Arm -->
+  
+  <!-- Heart with Animation -->
+  <path d="M250 400 L 275 425 L 300 400 Q 310 380 300 370 Q 280 360 275 380 Q 270 360 250 370 Q 240 380 250 400 Z" fill="#f44336">
+    <animate attributeName="transform" attributeType="XML" type="scale" values="1;1.1;1" begin="0s" dur="1s" repeatCount="indefinite" additive="sum"/>
+    <animate attributeName="transform" attributeType="XML" type="translate" values="0,0;0,-5;0,0" begin="0s" dur="1s" repeatCount="indefinite" additive="sum"/>
+  </path>
+  
+  <!-- Title -->
+  <text x="250" y="75" font-family="Arial" font-size="24" fill="#333" text-anchor="middle" font-weight="bold">Blood Bank Management System</text>
+</svg>

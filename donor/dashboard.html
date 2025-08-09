@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/donor-avatar.jpg" alt="Donor Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>John Doe</h3>
+                <p>Donor</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="donation-history.html">
+                        <i class="fas fa-history"></i>
+                        <span>Donation History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="upcoming-drives.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Upcoming Drives</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="schedule-donation.html">
+                        <i class="fas fa-clock"></i>
+                        <span>Schedule Donation</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="certificates.html">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certificates</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="rewards.html">
+                        <i class="fas fa-gift"></i>
+                        <span>Rewards</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">2</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Emergency blood request for your blood type (A+)</p>
+                                    <span class="notification-time">1 hour ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Upcoming donation drive near your location</p>
+                                    <span class="notification-time">3 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your donation certificate is ready to download</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>You've earned a reward for your 5th donation!</p>
+                                    <span class="notification-time">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/donor-avatar.jpg" alt="Donor Avatar">
+                        <span>John Doe</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Donor Dashboard</h1>
+                <p>Welcome back, John! Thank you for being a lifesaver.</p>
+            </div>
+
+            <!-- Donor Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-card-icon donations">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Total Donations</h3>
+                        <p class="stat-number">5</p>
+                        <p class="stat-change positive">Last donation: June 10, 2023</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon patients">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Lives Saved</h3>
+                        <p class="stat-number">15</p>
+                        <p class="stat-change positive">Each donation saves up to 3 lives</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon donors">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Donor Status</h3>
+                        <p class="stat-number">Silver</p>
+                        <p class="stat-change positive">5 more donations to Gold</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon requests">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Reward Points</h3>
+                        <p class="stat-number">250</p>
+                        <p class="stat-change positive">50 points earned last month</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donation Eligibility & Next Donation -->
+            <div class="dashboard-row">
+                <div class="dashboard-card eligibility-card">
+                    <div class="card-header">
+                        <h2>Donation Eligibility</h2>
+                    </div>
+                    <div class="eligibility-content">
+                        <div class="eligibility-status eligible">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>You are eligible to donate!</h3>
+                            <p>Your last donation was more than 56 days ago.</p>
+                        </div>
+                        <div class="eligibility-info">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Donor ID</h4>
+                                    <p>#D-5678</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Blood Type</h4>
+                                    <p>A+</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Last Donation</h4>
+                                    <p>June 10, 2023</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Next Eligible Date</h4>
+                                    <p>August 5, 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="eligibility-actions">
+                            <a href="schedule-donation.html" class="btn primary-btn">Schedule Donation</a>
+                            <a href="upcoming-drives.html" class="btn secondary-btn">View Donation Drives</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blood Impact -->
+                <div class="dashboard-card impact-card">
+                    <div class="card-header">
+                        <h2>Your Blood Impact</h2>
+                    </div>
+                    <div class="impact-content">
+                        <div class="impact-chart">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                        <div class="impact-stats">
+                            <div class="impact-stat">
+                                <div class="impact-icon">
+                                    <i class="fas fa-hospital-user"></i>
+                                </div>
+                                <div class="impact-info">
+                                    <h4>Patients Helped</h4>
+                                    <p>15</p>
+                                </div>
+                            </div>
+                            <div class="impact-stat">
+                                <div class="impact-icon">
+                                    <i class="fas fa-procedures"></i>
+                                </div>
+                                <div class="impact-info">
+                                    <h4>Surgeries Supported</h4>
+                                    <p>3</p>
+                                </div>
+                            </div>
+                            <div class="impact-stat">
+                                <div class="impact-icon">
+                                    <i class="fas fa-baby"></i>
+                                </div>
+                                <div class="impact-info">
+                                    <h4>Newborns Helped</h4>
+                                    <p>2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Donations & Upcoming Drives -->
+            <div class="dashboard-row">
+                <!-- Recent Donations -->
+                <div class="dashboard-card recent-donations-card">
+                    <div class="card-header">
+                        <h2>Recent Donations</h2>
+                        <a href="donation-history.html" class="view-all">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Donation ID</th>
+                                    <th>Date</th>
+                                    <th>Location</th>
+                                    <th>Units</th>
+                                    <th>Certificate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#DON-1234</td>
+                                    <td>June 10, 2023</td>
+                                    <td>Central Blood Bank</td>
+                                    <td>1</td>
+                                    <td>
+                                        <a href="#" class="certificate-link"><i class="fas fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#DON-1156</td>
+                                    <td>March 15, 2023</td>
+                                    <td>Community Drive</td>
+                                    <td>1</td>
+                                    <td>
+                                        <a href="#" class="certificate-link"><i class="fas fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#DON-1089</td>
+                                    <td>December 22, 2022</td>
+                                    <td>Central Blood Bank</td>
+                                    <td>1</td>
+                                    <td>
+                                        <a href="#" class="certificate-link"><i class="fas fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#DON-1022</td>
+                                    <td>September 5, 2022</td>
+                                    <td>Mobile Blood Drive</td>
+                                    <td>1</td>
+                                    <td>
+                                        <a href="#" class="certificate-link"><i class="fas fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#DON-978</td>
+                                    <td>June 18, 2022</td>
+                                    <td>Central Blood Bank</td>
+                                    <td>1</td>
+                                    <td>
+                                        <a href="#" class="certificate-link"><i class="fas fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Upcoming Donation Drives -->
+                <div class="dashboard-card upcoming-drives-card">
+                    <div class="card-header">
+                        <h2>Upcoming Donation Drives</h2>
+                        <a href="upcoming-drives.html" class="view-all">View All</a>
+                    </div>
+                    <div class="upcoming-drives">
+                        <div class="drive-item">
+                            <div class="drive-date">
+                                <div class="date-day">15</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="drive-info">
+                                <h3>Community Blood Drive</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> Central Community Center (2.5 miles away)</p>
+                                <p><i class="fas fa-clock"></i> 9:00 AM - 5:00 PM</p>
+                                <div class="drive-actions">
+                                    <a href="schedule-donation.html?drive=1234" class="btn small-btn primary-btn">Schedule</a>
+                                    <a href="upcoming-drives.html?drive=1234" class="btn small-btn secondary-btn">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="drive-item">
+                            <div class="drive-date">
+                                <div class="date-day">22</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="drive-info">
+                                <h3>Corporate Blood Donation</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> Tech Solutions Inc. (5.1 miles away)</p>
+                                <p><i class="fas fa-clock"></i> 10:00 AM - 4:00 PM</p>
+                                <div class="drive-actions">
+                                    <a href="schedule-donation.html?drive=1235" class="btn small-btn primary-btn">Schedule</a>
+                                    <a href="upcoming-drives.html?drive=1235" class="btn small-btn secondary-btn">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="drive-item">
+                            <div class="drive-date">
+                                <div class="date-day">30</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="drive-info">
+                                <h3>University Blood Drive</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> State University Campus (3.8 miles away)</p>
+                                <p><i class="fas fa-clock"></i> 11:00 AM - 6:00 PM</p>
+                                <div class="drive-actions">
+                                    <a href="schedule-donation.html?drive=1236" class="btn small-btn primary-btn">Schedule</a>
+                                    <a href="upcoming-drives.html?drive=1236" class="btn small-btn secondary-btn">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rewards Section -->
+            <div class="dashboard-row">
+                <div class="dashboard-card rewards-card">
+                    <div class="card-header">
+                        <h2>Your Rewards</h2>
+                        <a href="rewards.html" class="view-all">View All</a>
+                    </div>
+                    <div class="rewards-content">
+                        <div class="rewards-progress">
+                            <div class="progress-info">
+                                <div class="progress-label">Donor Level Progress</div>
+                                <div class="progress-value">Silver (5/10)</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 50%;"></div>
+                            </div>
+                            <div class="progress-levels">
+                                <div class="level-item active">
+                                    <div class="level-dot"></div>
+                                    <div class="level-label">Bronze</div>
+                                </div>
+                                <div class="level-item active">
+                                    <div class="level-dot"></div>
+                                    <div class="level-label">Silver</div>
+                                </div>
+                                <div class="level-item">
+                                    <div class="level-dot"></div>
+                                    <div class="level-label">Gold</div>
+                                </div>
+                                <div class="level-item">
+                                    <div class="level-dot"></div>
+                                    <div class="level-label">Platinum</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rewards-available">
+                            <h3>Available Rewards</h3>
+                            <div class="rewards-list">
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-coffee"></i>
+                                    </div>
+                                    <div class="reward-info">
+                                        <h4>Free Coffee</h4>
+                                        <p>Redeem a free coffee at any participating café</p>
+                                        <div class="reward-points">100 points</div>
+                                    </div>
+                                    <button class="btn small-btn primary-btn">Redeem</button>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-ticket-alt"></i>
+                                    </div>
+                                    <div class="reward-info">
+                                        <h4>Movie Ticket</h4>
+                                        <p>One free movie ticket at CineStar Theaters</p>
+                                        <div class="reward-points">250 points</div>
+                                    </div>
+                                    <button class="btn small-btn primary-btn">Redeem</button>
+                                </div>
+                                <div class="reward-item disabled">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div class="reward-info">
+                                        <h4>Restaurant Voucher</h4>
+                                        <p>$25 voucher for participating restaurants</p>
+                                        <div class="reward-points">500 points</div>
+                                    </div>
+                                    <button class="btn small-btn secondary-btn" disabled>Need 250 more</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/donor-dashboard.js"></script>
+</body>
+</html>

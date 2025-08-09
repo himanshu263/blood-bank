@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Hospital Building -->
+  <rect x="50" y="100" width="150" height="150" fill="#f0f0f0" stroke="#ccc" stroke-width="2"/>
+  <rect x="100" y="180" width="50" height="70" fill="#e0e0e0" stroke="#ccc" stroke-width="2"/>
+  <rect x="70" y="130" width="30" height="30" fill="#a0d4ff" stroke="#ccc" stroke-width="1"/>
+  <rect x="150" y="130" width="30" height="30" fill="#a0d4ff" stroke="#ccc" stroke-width="1"/>
+  <path d="M125 100 L125 80 L150 80 L150 100" fill="#e0e0e0" stroke="#ccc" stroke-width="2"/>
+  <rect x="110" y="50" width="30" height="30" fill="#dc3545" stroke="#b02a37" stroke-width="2"/>
+  <rect x="120" y="60" width="10" height="30" fill="white" stroke="white" stroke-width="1"/>
+  <rect x="110" y="70" width="30" height="10" fill="white" stroke="white" stroke-width="1"/>
+  
+  <!-- Blood Bag -->
+  <path d="M250 120 C250 110, 270 110, 270 120 L270 200 C270 220, 250 220, 250 200 Z" fill="#ffcccb" stroke="#dc3545" stroke-width="2"/>
+  <path d="M250 120 L270 120" stroke="#dc3545" stroke-width="2"/>
+  <rect x="255" y="100" width="10" height="20" fill="#e0e0e0" stroke="#ccc" stroke-width="1"/>
+  <text x="255" y="170" font-family="Arial" font-size="12" fill="#dc3545">A+</text>
+  
+  <!-- Person -->
+  <circle cx="330" cy="100" r="20" fill="#ffd699" stroke="#ffb366" stroke-width="1"/>
+  <path d="M330 120 L330 170" stroke="#666" stroke-width="4"/>
+  <path d="M330 130 L310 160" stroke="#666" stroke-width="4"/>
+  <path d="M330 170 L320 210" stroke="#666" stroke-width="4"/>
+  <path d="M330 170 L340 210" stroke="#666" stroke-width="4"/>
+  
+  <!-- Heart with Animation -->
+  <path d="M330 150 C320 140, 300 150, 310 170 C320 190, 330 180, 330 170 C330 180, 340 190, 350 170 C360 150, 340 140, 330 150 Z" fill="#dc3545">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="transform" attributeType="XML" type="scale" values="1;1.1;1" dur="2s" repeatCount="indefinite" additive="sum"/>
+  </path>
+  
+  <!-- Connecting Tube -->
+  <path d="M270 150 C290 150, 290 150, 310 160" stroke="#dc3545" stroke-width="3" fill="none"/>
+  
+  <!-- Animated Blood Flow -->
+  <circle cx="280" cy="150" r="3" fill="#dc3545">
+    <animate attributeName="cx" values="270;310" dur="3s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="290" cy="150" r="3" fill="#dc3545">
+    <animate attributeName="cx" values="270;310" dur="3s" begin="1s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="300" cy="155" r="3" fill="#dc3545">
+    <animate attributeName="cx" values="270;310" dur="3s" begin="2s" repeatCount="indefinite" />
+  </circle>
+</svg>

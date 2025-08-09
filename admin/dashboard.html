@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/admin-avatar.jpg" alt="Admin Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>Admin User</h3>
+                <p>Super Admin</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="donors.html">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Donors</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="patients.html">
+                        <i class="fas fa-user-injured"></i>
+                        <span>Patients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="blood-inventory.html">
+                        <i class="fas fa-tint"></i>
+                        <span>Blood Inventory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="blood-requests.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Blood Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="donation-drives.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Donation Drives</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Emergency blood request for O- blood type</p>
+                                    <span class="notification-time">5 minutes ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>New donor registration: John Doe</p>
+                                    <span class="notification-time">1 hour ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Low inventory alert: AB- blood type</p>
+                                    <span class="notification-time">3 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-clipboard-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Blood request #12345 has been fulfilled</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/admin-avatar.jpg" alt="Admin Avatar">
+                        <span>Admin User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <p>Welcome back, Admin User!</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-card-icon donors">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Total Donors</h3>
+                        <p class="stat-number">5,248</p>
+                        <p class="stat-change positive"><i class="fas fa-arrow-up"></i> 12% from last month</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon patients">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Total Patients</h3>
+                        <p class="stat-number">3,129</p>
+                        <p class="stat-change positive"><i class="fas fa-arrow-up"></i> 8% from last month</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon donations">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Blood Donations</h3>
+                        <p class="stat-number">1,024</p>
+                        <p class="stat-change positive"><i class="fas fa-arrow-up"></i> 15% from last month</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon requests">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <h3>Blood Requests</h3>
+                        <p class="stat-number">876</p>
+                        <p class="stat-change negative"><i class="fas fa-arrow-down"></i> 3% from last month</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blood Inventory Status -->
+            <div class="dashboard-row">
+                <div class="dashboard-card blood-inventory-card">
+                    <div class="card-header">
+                        <h2>Blood Inventory Status</h2>
+                        <a href="blood-inventory.html" class="view-all">View All</a>
+                    </div>
+                    <div class="blood-inventory-status">
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">A+</div>
+                                <div class="blood-units">125 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">A-</div>
+                                <div class="blood-units">45 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">B+</div>
+                                <div class="blood-units">98 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">B-</div>
+                                <div class="blood-units">32 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level" style="width: 30%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">AB+</div>
+                                <div class="blood-units">56 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">AB-</div>
+                                <div class="blood-units">18 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level critical" style="width: 15%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">O+</div>
+                                <div class="blood-units">142 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="blood-type-status">
+                            <div class="blood-type-info">
+                                <div class="blood-type">O-</div>
+                                <div class="blood-units">24 units</div>
+                            </div>
+                            <div class="blood-level-bar">
+                                <div class="blood-level critical" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Chart -->
+                <div class="dashboard-card activity-chart-card">
+                    <div class="card-header">
+                        <h2>Activity Overview</h2>
+                        <div class="chart-period-selector">
+                            <button class="period-btn active" data-period="weekly">Weekly</button>
+                            <button class="period-btn" data-period="monthly">Monthly</button>
+                            <button class="period-btn" data-period="yearly">Yearly</button>
+                        </div>
+                    </div>
+                    <div class="activity-chart">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Requests and Upcoming Drives -->
+            <div class="dashboard-row">
+                <!-- Recent Blood Requests -->
+                <div class="dashboard-card recent-requests-card">
+                    <div class="card-header">
+                        <h2>Recent Blood Requests</h2>
+                        <a href="blood-requests.html" class="view-all">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>Patient</th>
+                                    <th>Blood Type</th>
+                                    <th>Units</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#REQ-1234</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>O-</td>
+                                    <td>2</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn approve-btn"><i class="fas fa-check"></i></button>
+                                            <button class="action-btn reject-btn"><i class="fas fa-times"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#REQ-1233</td>
+                                    <td>Michael Brown</td>
+                                    <td>AB+</td>
+                                    <td>1</td>
+                                    <td><span class="status-badge approved">Approved</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#REQ-1232</td>
+                                    <td>Emily Davis</td>
+                                    <td>A+</td>
+                                    <td>3</td>
+                                    <td><span class="status-badge fulfilled">Fulfilled</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#REQ-1231</td>
+                                    <td>Robert Wilson</td>
+                                    <td>B-</td>
+                                    <td>2</td>
+                                    <td><span class="status-badge rejected">Rejected</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#REQ-1230</td>
+                                    <td>Jennifer Lee</td>
+                                    <td>O+</td>
+                                    <td>1</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn approve-btn"><i class="fas fa-check"></i></button>
+                                            <button class="action-btn reject-btn"><i class="fas fa-times"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Upcoming Donation Drives -->
+                <div class="dashboard-card upcoming-drives-card">
+                    <div class="card-header">
+                        <h2>Upcoming Donation Drives</h2>
+                        <a href="donation-drives.html" class="view-all">View All</a>
+                    </div>
+                    <div class="upcoming-drives">
+                        <div class="drive-item">
+                            <div class="drive-date">
+                                <div class="date-day">15</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="drive-info">
+                                <h3>Community Blood Drive</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> Central Community Center</p>
+                                <p><i class="fas fa-clock"></i> 9:00 AM - 5:00 PM</p>
+                                <div class="drive-stats">
+                                    <span><i class="fas fa-user-friends"></i> 45 Registered</span>
+                                    <span><i class="fas fa-tint"></i> Goal: 100 units</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="drive-item">
+                            <div class="drive-date">
+                                <div class="date-day">22</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="drive-info">
+                                <h3>Corporate Blood Donation</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> Tech Solutions Inc.</p>
+                                <p><i class="fas fa-clock"></i> 10:00 AM - 4:00 PM</p>
+                                <div class="drive-stats">
+                                    <span><i class="fas fa-user-friends"></i> 32 Registered</span>
+                                    <span><i class="fas fa-tint"></i> Goal: 50 units</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="drive-item">
+                            <div class="drive-date">
+                                <div class="date-day">30</div>
+                                <div class="date-month">JUN</div>
+                            </div>
+                            <div class="drive-info">
+                                <h3>University Blood Drive</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> State University Campus</p>
+                                <p><i class="fas fa-clock"></i> 11:00 AM - 6:00 PM</p>
+                                <div class="drive-stats">
+                                    <span><i class="fas fa-user-friends"></i> 78 Registered</span>
+                                    <span><i class="fas fa-tint"></i> Goal: 150 units</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Donors -->
+            <div class="dashboard-row">
+                <div class="dashboard-card recent-donors-card">
+                    <div class="card-header">
+                        <h2>Recent Donors</h2>
+                        <a href="donors.html" class="view-all">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Donor ID</th>
+                                    <th>Name</th>
+                                    <th>Blood Type</th>
+                                    <th>Last Donation</th>
+                                    <th>Total Donations</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#D-5678</td>
+                                    <td>John Doe</td>
+                                    <td>A+</td>
+                                    <td>June 10, 2023</td>
+                                    <td>5</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#D-5677</td>
+                                    <td>Jane Smith</td>
+                                    <td>O+</td>
+                                    <td>June 8, 2023</td>
+                                    <td>3</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#D-5676</td>
+                                    <td>David Johnson</td>
+                                    <td>B+</td>
+                                    <td>June 5, 2023</td>
+                                    <td>8</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#D-5675</td>
+                                    <td>Maria Garcia</td>
+                                    <td>AB-</td>
+                                    <td>June 3, 2023</td>
+                                    <td>2</td>
+                                    <td><span class="status-badge inactive">Inactive</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#D-5674</td>
+                                    <td>Robert Brown</td>
+                                    <td>O-</td>
+                                    <td>June 1, 2023</td>
+                                    <td>12</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

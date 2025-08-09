@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Hospitals - LifeStream Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles specific to hospitals page */
+        .hospitals-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .hospitals-content {
+            padding: 20px;
+        }
+        
+        .map-container {
+            height: 400px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        
+        .map-title {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .map-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .map-filter {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .map-filter:hover {
+            background: #e9ecef;
+        }
+        
+        .map-filter.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .map-search {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .map-search input {
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            flex: 1;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .map-search button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        
+        .hospital-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .hospital-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .hospital-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .hospital-image {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .hospital-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .hospital-type.hospital {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .hospital-type.blood-bank {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .hospital-type.both {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .hospital-info {
+            padding: 15px;
+        }
+        
+        .hospital-name {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .hospital-address {
+            margin: 0 0 10px 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .hospital-address i {
+            margin-right: 5px;
+            margin-top: 3px;
+        }
+        
+        .hospital-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .hospital-detail {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+        
+        .hospital-detail i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        .hospital-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .hospital-action {
+            flex: 1;
+            padding: 8px 0;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .hospital-action.directions {
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .hospital-action.contact {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .hospital-action:hover {
+            opacity: 0.9;
+        }
+        
+        .blood-availability {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .blood-availability-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #343a40;
+            margin: 0 0 5px 0;
+        }
+        
+        .blood-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .blood-type {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .blood-type.available {
+            background: #28a745;
+        }
+        
+        .blood-type.limited {
+            background: #ffc107;
+        }
+        
+        .blood-type.unavailable {
+            background: #dc3545;
+        }
+        
+        .blood-type.unknown {
+            background: #6c757d;
+        }
+        
+        .filters-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .search-filter {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .search-filter input {
+            padding: 8px 15px;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .search-filter button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        
+        .pagination-item {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .pagination-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .pagination-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .pagination-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #adb5bd;
+        }
+        
+        .empty-state h3 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+        
+        .empty-state p {
+            margin: 0 0 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .filters-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .filter-select {
+                flex: 1;
+            }
+            
+            .search-filter {
+                width: 100%;
+            }
+            
+            .search-filter input {
+                flex: 1;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+            
+            .map-overlay {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.svg" alt="LifeStream Logo">
+            <h2>LifeStream</h2>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+            </div>
+            <div class="admin-info">
+                <h3>Sarah Johnson</h3>
+                <p>Patient</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="blood-requests.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Blood Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="medical-history.html">
+                        <i class="fas fa-notes-medical"></i>
+                        <span>Medical History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="appointments.html">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="hospitals.html">
+                        <i class="fas fa-hospital"></i>
+                        <span>Hospitals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="messages.html">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../login.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="top-nav-right">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon emergency">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Your blood request #REQ-1234 has been approved</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Appointment reminder: Tomorrow at 10:00 AM</p>
+                                    <span class="notification-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>New message from Dr. Williams</p>
+                                    <span class="notification-time">Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="notifications.html">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-dropdown">
+                    <div class="admin-dropdown-toggle">
+                        <img src="../images/patient-avatar.jpg" alt="Patient Avatar">
+                        <span>Sarah Johnson</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="admin-dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="../login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Nearby Hospitals & Blood Banks</h1>
+                <p>Find hospitals and blood banks near you for blood donations and transfusions.</p>
+            </div>
+
+            <!-- Map Section -->
+            <div class="map-container">
+                <div id="hospital-map" style="width: 100%; height: 100%; background: url('../images/map-placeholder.jpg') center/cover;"></div>
+                <div class="map-overlay">
+                    <h3 class="map-title">Find Nearby Facilities</h3>
+                    <div class="map-filters">
+                        <div class="map-filter active" data-filter="all">All</div>
+                        <div class="map-filter" data-filter="hospitals">Hospitals</div>
+                        <div class="map-filter" data-filter="blood-banks">Blood Banks</div>
+                        <div class="map-filter" data-filter="donation-centers">Donation Centers</div>
+                    </div>
+                    <div class="map-search">
+                        <input type="text" placeholder="Search location...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hospitals List -->
+            <div class="hospitals-card">
+                <div class="hospitals-content">
+                    <div class="filters-section">
+                        <div class="filter-group">
+                            <span class="filter-label">Filter by:</span>
+                            <select class="filter-select" id="facility-type">
+                                <option value="all">All Facilities</option>
+                                <option value="hospitals">Hospitals</option>
+                                <option value="blood-banks">Blood Banks</option>
+                                <option value="both">Hospitals with Blood Banks</option>
+                            </select>
+                            <select class="filter-select" id="blood-availability">
+                                <option value="all">All Blood Types</option>
+                                <option value="a-positive">A+</option>
+                                <option value="a-negative">A-</option>
+                                <option value="b-positive">B+</option>
+                                <option value="b-negative">B-</option>
+                                <option value="ab-positive">AB+</option>
+                                <option value="ab-negative">AB-</option>
+                                <option value="o-positive">O+</option>
+                                <option value="o-negative">O-</option>
+                            </select>
+                            <select class="filter-select" id="distance">
+                                <option value="5">Within 5 km</option>
+                                <option value="10" selected>Within 10 km</option>
+                                <option value="25">Within 25 km</option>
+                                <option value="50">Within 50 km</option>
+                            </select>
+                        </div>
+                        <div class="search-filter">
+                            <input type="text" placeholder="Search hospitals...">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="hospital-list">
+                        <!-- Hospital Card 1 -->
+                        <div class="hospital-card">
+                            <div class="hospital-image" style="background-image: url('../images/hospital-1.jpg')">
+                                <div class="hospital-type both">Hospital & Blood Bank</div>
+                            </div>
+                            <div class="hospital-info">
+                                <h3 class="hospital-name">Central City Hospital</h3>
+                                <p class="hospital-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>123 Main Street, Central City, CA 90001</span>
+                                </p>
+                                <div class="hospital-details">
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(123) 456-7890</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>24/7</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-route"></i>
+                                        <span>2.5 km away</span>
+                                    </div>
+                                </div>
+                                <div class="blood-availability">
+                                    <p class="blood-availability-title">Blood Availability:</p>
+                                    <div class="blood-types">
+                                        <div class="blood-type available" title="A+ Available">A+</div>
+                                        <div class="blood-type available" title="A- Available">A-</div>
+                                        <div class="blood-type limited" title="B+ Limited">B+</div>
+                                        <div class="blood-type limited" title="B- Limited">B-</div>
+                                        <div class="blood-type available" title="AB+ Available">AB+</div>
+                                        <div class="blood-type unavailable" title="AB- Unavailable">AB-</div>
+                                        <div class="blood-type available" title="O+ Available">O+</div>
+                                        <div class="blood-type limited" title="O- Limited">O-</div>
+                                    </div>
+                                </div>
+                                <div class="hospital-actions">
+                                    <div class="hospital-action directions">Get Directions</div>
+                                    <div class="hospital-action contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hospital Card 2 -->
+                        <div class="hospital-card">
+                            <div class="hospital-image" style="background-image: url('../images/hospital-2.jpg')">
+                                <div class="hospital-type hospital">Hospital</div>
+                            </div>
+                            <div class="hospital-info">
+                                <h3 class="hospital-name">Memorial Medical Center</h3>
+                                <p class="hospital-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>456 Oak Avenue, Central City, CA 90002</span>
+                                </p>
+                                <div class="hospital-details">
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(123) 456-7891</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>24/7</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-route"></i>
+                                        <span>3.8 km away</span>
+                                    </div>
+                                </div>
+                                <div class="blood-availability">
+                                    <p class="blood-availability-title">Blood Availability:</p>
+                                    <div class="blood-types">
+                                        <div class="blood-type limited" title="A+ Limited">A+</div>
+                                        <div class="blood-type unavailable" title="A- Unavailable">A-</div>
+                                        <div class="blood-type available" title="B+ Available">B+</div>
+                                        <div class="blood-type unavailable" title="B- Unavailable">B-</div>
+                                        <div class="blood-type limited" title="AB+ Limited">AB+</div>
+                                        <div class="blood-type unavailable" title="AB- Unavailable">AB-</div>
+                                        <div class="blood-type available" title="O+ Available">O+</div>
+                                        <div class="blood-type limited" title="O- Limited">O-</div>
+                                    </div>
+                                </div>
+                                <div class="hospital-actions">
+                                    <div class="hospital-action directions">Get Directions</div>
+                                    <div class="hospital-action contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hospital Card 3 -->
+                        <div class="hospital-card">
+                            <div class="hospital-image" style="background-image: url('../images/blood-bank-1.jpg')">
+                                <div class="hospital-type blood-bank">Blood Bank</div>
+                            </div>
+                            <div class="hospital-info">
+                                <h3 class="hospital-name">LifeStream Blood Center</h3>
+                                <p class="hospital-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>789 Elm Street, Central City, CA 90003</span>
+                                </p>
+                                <div class="hospital-details">
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(123) 456-7892</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>8:00 AM - 8:00 PM</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-route"></i>
+                                        <span>1.2 km away</span>
+                                    </div>
+                                </div>
+                                <div class="blood-availability">
+                                    <p class="blood-availability-title">Blood Availability:</p>
+                                    <div class="blood-types">
+                                        <div class="blood-type available" title="A+ Available">A+</div>
+                                        <div class="blood-type available" title="A- Available">A-</div>
+                                        <div class="blood-type available" title="B+ Available">B+</div>
+                                        <div class="blood-type available" title="B- Available">B-</div>
+                                        <div class="blood-type available" title="AB+ Available">AB+</div>
+                                        <div class="blood-type available" title="AB- Available">AB-</div>
+                                        <div class="blood-type available" title="O+ Available">O+</div>
+                                        <div class="blood-type available" title="O- Available">O-</div>
+                                    </div>
+                                </div>
+                                <div class="hospital-actions">
+                                    <div class="hospital-action directions">Get Directions</div>
+                                    <div class="hospital-action contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hospital Card 4 -->
+                        <div class="hospital-card">
+                            <div class="hospital-image" style="background-image: url('../images/hospital-3.jpg')">
+                                <div class="hospital-type both">Hospital & Blood Bank</div>
+                            </div>
+                            <div class="hospital-info">
+                                <h3 class="hospital-name">Riverside General Hospital</h3>
+                                <p class="hospital-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>101 River Road, Central City, CA 90004</span>
+                                </p>
+                                <div class="hospital-details">
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(123) 456-7893</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>24/7</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-route"></i>
+                                        <span>5.7 km away</span>
+                                    </div>
+                                </div>
+                                <div class="blood-availability">
+                                    <p class="blood-availability-title">Blood Availability:</p>
+                                    <div class="blood-types">
+                                        <div class="blood-type available" title="A+ Available">A+</div>
+                                        <div class="blood-type limited" title="A- Limited">A-</div>
+                                        <div class="blood-type available" title="B+ Available">B+</div>
+                                        <div class="blood-type limited" title="B- Limited">B-</div>
+                                        <div class="blood-type limited" title="AB+ Limited">AB+</div>
+                                        <div class="blood-type unavailable" title="AB- Unavailable">AB-</div>
+                                        <div class="blood-type available" title="O+ Available">O+</div>
+                                        <div class="blood-type limited" title="O- Limited">O-</div>
+                                    </div>
+                                </div>
+                                <div class="hospital-actions">
+                                    <div class="hospital-action directions">Get Directions</div>
+                                    <div class="hospital-action contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hospital Card 5 -->
+                        <div class="hospital-card">
+                            <div class="hospital-image" style="background-image: url('../images/blood-bank-2.jpg')">
+                                <div class="hospital-type blood-bank">Blood Bank</div>
+                            </div>
+                            <div class="hospital-info">
+                                <h3 class="hospital-name">Community Blood Services</h3>
+                                <p class="hospital-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>202 Pine Street, Central City, CA 90005</span>
+                                </p>
+                                <div class="hospital-details">
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(123) 456-7894</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>9:00 AM - 6:00 PM</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-route"></i>
+                                        <span>4.3 km away</span>
+                                    </div>
+                                </div>
+                                <div class="blood-availability">
+                                    <p class="blood-availability-title">Blood Availability:</p>
+                                    <div class="blood-types">
+                                        <div class="blood-type available" title="A+ Available">A+</div>
+                                        <div class="blood-type limited" title="A- Limited">A-</div>
+                                        <div class="blood-type available" title="B+ Available">B+</div>
+                                        <div class="blood-type limited" title="B- Limited">B-</div>
+                                        <div class="blood-type limited" title="AB+ Limited">AB+</div>
+                                        <div class="blood-type limited" title="AB- Limited">AB-</div>
+                                        <div class="blood-type available" title="O+ Available">O+</div>
+                                        <div class="blood-type limited" title="O- Limited">O-</div>
+                                    </div>
+                                </div>
+                                <div class="hospital-actions">
+                                    <div class="hospital-action directions">Get Directions</div>
+                                    <div class="hospital-action contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hospital Card 6 -->
+                        <div class="hospital-card">
+                            <div class="hospital-image" style="background-image: url('../images/hospital-4.jpg')">
+                                <div class="hospital-type hospital">Hospital</div>
+                            </div>
+                            <div class="hospital-info">
+                                <h3 class="hospital-name">Eastside Medical Center</h3>
+                                <p class="hospital-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>303 Maple Avenue, Central City, CA 90006</span>
+                                </p>
+                                <div class="hospital-details">
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(123) 456-7895</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>24/7</span>
+                                    </div>
+                                    <div class="hospital-detail">
+                                        <i class="fas fa-route"></i>
+                                        <span>7.1 km away</span>
+                                    </div>
+                                </div>
+                                <div class="blood-availability">
+                                    <p class="blood-availability-title">Blood Availability:</p>
+                                    <div class="blood-types">
+                                        <div class="blood-type limited" title="A+ Limited">A+</div>
+                                        <div class="blood-type unavailable" title="A- Unavailable">A-</div>
+                                        <div class="blood-type limited" title="B+ Limited">B+</div>
+                                        <div class="blood-type unavailable" title="B- Unavailable">B-</div>
+                                        <div class="blood-type unavailable" title="AB+ Unavailable">AB+</div>
+                                        <div class="blood-type unavailable" title="AB- Unavailable">AB-</div>
+                                        <div class="blood-type limited" title="O+ Limited">O+</div>
+                                        <div class="blood-type unavailable" title="O- Unavailable">O-</div>
+                                    </div>
+                                </div>
+                                <div class="hospital-actions">
+                                    <div class="hospital-action directions">Get Directions</div>
+                                    <div class="hospital-action contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination">
+                        <div class="pagination-item disabled"><i class="fas fa-chevron-left"></i></div>
+                        <div class="pagination-item active">1</div>
+                        <div class="pagination-item">2</div>
+                        <div class="pagination-item">3</div>
+                        <div class="pagination-item"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize map filters
+            initMapFilters();
+            
+            // Initialize hospital filters
+            initHospitalFilters();
+            
+            // Initialize hospital actions
+            initHospitalActions();
+            
+            // Initialize mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+            
+            // Initialize notification system
+            const notificationBell = document.querySelector('.notification-bell');
+            const notificationDropdown = document.querySelector('.notification-dropdown');
+            
+            if (notificationBell && notificationDropdown) {
+                notificationBell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (notificationDropdown.classList.contains('active')) {
+                        notificationDropdown.classList.remove('active');
+                    }
+                });
+                
+                notificationDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize admin dropdown
+            const adminDropdownToggle = document.querySelector('.admin-dropdown-toggle');
+            const adminDropdownMenu = document.querySelector('.admin-dropdown-menu');
+            
+            if (adminDropdownToggle && adminDropdownMenu) {
+                adminDropdownToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    adminDropdownMenu.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function() {
+                    if (adminDropdownMenu.classList.contains('active')) {
+                        adminDropdownMenu.classList.remove('active');
+                    }
+                });
+                
+                adminDropdownMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Initialize pagination
+            const paginationItems = document.querySelectorAll('.pagination-item');
+            paginationItems.forEach(item => {
+                if (!item.classList.contains('disabled')) {
+                    item.addEventListener('click', function() {
+                        paginationItems.forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                }
+            });
+        });
+        
+        function initMapFilters() {
+            const mapFilters = document.querySelectorAll('.map-filter');
+            
+            mapFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    mapFilters.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filterType = this.getAttribute('data-filter');
+                    // In a real application, this would filter the map markers
+                    console.log('Map filter changed:', filterType);
+                });
+            });
+            
+            const mapSearchButton = document.querySelector('.map-search button');
+            const mapSearchInput = document.querySelector('.map-search input');
+            
+            if (mapSearchButton && mapSearchInput) {
+                mapSearchButton.addEventListener('click', function() {
+                    const searchTerm = mapSearchInput.value.trim();
+                    if (searchTerm) {
+                        // In a real application, this would search the map
+                        console.log('Map search term:', searchTerm);
+                    }
+                });
+                
+                mapSearchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const searchTerm = this.value.trim();
+                        if (searchTerm) {
+                            // In a real application, this would search the map
+                            console.log('Map search term:', searchTerm);
+                        }
+                    }
+                });
+            }
+        }
+        
+        function initHospitalFilters() {
+            const facilityTypeSelect = document.getElementById('facility-type');
+            const bloodAvailabilitySelect = document.getElementById('blood-availability');
+            const distanceSelect = document.getElementById('distance');
+            
+            const filterSelects = [facilityTypeSelect, bloodAvailabilitySelect, distanceSelect];
+            
+            filterSelects.forEach(select => {
+                if (select) {
+                    select.addEventListener('change', function() {
+                        // In a real application, this would filter the hospital list
+                        console.log('Filter changed:', this.id, this.value);
+                        filterHospitals();
+                    });
+                }
+            });
+            
+            const searchButton = document.querySelector('.search-filter button');
+            const searchInput = document.querySelector('.search-filter input');
+            
+            if (searchButton && searchInput) {
+                searchButton.addEventListener('click', function() {
+                    const searchTerm = searchInput.value.trim();
+                    if (searchTerm) {
+                        // In a real application, this would search the hospital list
+                        console.log('Search term:', searchTerm);
+                        filterHospitals(searchTerm);
+                    }
+                });
+                
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const searchTerm = this.value.trim();
+                        if (searchTerm) {
+                            // In a real application, this would search the hospital list
+                            console.log('Search term:', searchTerm);
+                            filterHospitals(searchTerm);
+                        }
+                    }
+                });
+            }
+        }
+        
+        function filterHospitals(searchTerm = '') {
+            // This is a placeholder function that would filter the hospital list in a real application
+            // For demonstration purposes, we'll just log the filter values
+            const facilityType = document.getElementById('facility-type').value;
+            const bloodAvailability = document.getElementById('blood-availability').value;
+            const distance = document.getElementById('distance').value;
+            
+            console.log('Filtering hospitals with:');
+            console.log('- Facility type:', facilityType);
+            console.log('- Blood availability:', bloodAvailability);
+            console.log('- Distance:', distance, 'km');
+            console.log('- Search term:', searchTerm);
+            
+            // In a real application, this would update the hospital list based on the filters
+            // For now, we'll just simulate a loading state
+            const hospitalList = document.querySelector('.hospital-list');
+            hospitalList.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                hospitalList.style.opacity = '1';
+            }, 500);
+        }
+        
+        function initHospitalActions() {
+            const directionButtons = document.querySelectorAll('.hospital-action.directions');
+            const contactButtons = document.querySelectorAll('.hospital-action.contact');
+            
+            directionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const hospitalCard = this.closest('.hospital-card');
+                    const hospitalName = hospitalCard.querySelector('.hospital-name').textContent;
+                    const hospitalAddress = hospitalCard.querySelector('.hospital-address span').textContent;
+                    
+                    // In a real application, this would open a map with directions
+                    alert(`Getting directions to ${hospitalName} at ${hospitalAddress}`);
+                });
+            });
+            
+            contactButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const hospitalCard = this.closest('.hospital-card');
+                    const hospitalName = hospitalCard.querySelector('.hospital-name').textContent;
+                    const hospitalPhone = hospitalCard.querySelector('.hospital-detail:first-child span').textContent;
+                    
+                    // In a real application, this would open a contact modal or initiate a call
+                    alert(`Contacting ${hospitalName} at ${hospitalPhone}`);
+                });
+            });
+            
+            // Make blood type indicators show tooltips on hover
+            const bloodTypes = document.querySelectorAll('.blood-type');
+            bloodTypes.forEach(type => {
+                const title = type.getAttribute('title');
+                type.addEventListener('mouseenter', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = title;
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.background = 'rgba(0, 0, 0, 0.8)';
+                    tooltip.style.color = 'white';
+                    tooltip.style.padding = '5px 10px';
+                    tooltip.style.borderRadius = '3px';
+                    tooltip.style.fontSize = '0.8rem';
+                    tooltip.style.zIndex = '1000';
+                    tooltip.style.top = (this.getBoundingClientRect().top - 30) + 'px';
+                    tooltip.style.left = (this.getBoundingClientRect().left + (this.offsetWidth / 2) - 50) + 'px';
+                    document.body.appendChild(tooltip);
+                    this.tooltip = tooltip;
+                });
+                
+                type.addEventListener('mouseleave', function() {
+                    if (this.tooltip) {
+                        document.body.removeChild(this.tooltip);
+                        this.tooltip = null;
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

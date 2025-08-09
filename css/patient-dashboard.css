@@ -1,0 +1,761 @@
+/**
+ * Patient Dashboard Specific Styles
+ * Extends the main dashboard.css with patient-specific styling
+ */
+
+/* Medical Summary Card */
+.medical-summary-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.medical-summary-content {
+    padding: 20px;
+}
+
+.medical-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    background: #f0f2f5;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.info-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.info-content h4 {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.info-content p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Medical Conditions */
+.medical-conditions,
+.medications {
+    margin-bottom: 25px;
+}
+
+.medical-conditions h3,
+.medications h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #343a40;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.conditions-list,
+.medications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.conditions-list li,
+.medications-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.condition-name,
+.medication-info {
+    font-weight: 500;
+}
+
+.medication-info {
+    display: flex;
+    align-items: center;
+}
+
+.medication-dosage {
+    margin-left: 10px;
+    background: #e9ecef;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #495057;
+}
+
+.medication-schedule {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.condition-status {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.condition-status.active {
+    background: #ffecec;
+    color: #dc3545;
+}
+
+.condition-status.controlled {
+    background: #e0f5e9;
+    color: #28a745;
+}
+
+/* Blood Request Card */
+.blood-request-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.blood-request-content {
+    padding: 20px;
+}
+
+.active-request {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 25px;
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.request-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #343a40;
+}
+
+.request-id {
+    background: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.request-details {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.request-info {
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    width: 140px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.high-priority {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Request Progress */
+.request-progress {
+    margin-bottom: 20px;
+}
+
+.progress-step {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.progress-step.animate {
+    animation: fadeInUp 0.5s forwards;
+}
+
+.progress-step:last-child {
+    padding-bottom: 0;
+}
+
+.progress-step::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 30px;
+    bottom: 0;
+    width: 2px;
+    background: #e9ecef;
+}
+
+.progress-step:last-child::before {
+    display: none;
+}
+
+.progress-step.completed::before {
+    background: var(--primary-color);
+}
+
+.step-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    color: #adb5bd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    position: relative;
+    z-index: 1;
+    border: 2px solid #e9ecef;
+}
+
+.progress-step.completed .step-icon {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.progress-step.active .step-icon {
+    background: white;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    animation: pulse 2s infinite;
+}
+
+.step-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+}
+
+.step-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.progress-step.completed .step-info h4 {
+    color: var(--primary-color);
+}
+
+.progress-step.active .step-info h4 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.request-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* New Request CTA */
+.new-request-cta {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.new-request-cta h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    color: #343a40;
+}
+
+.new-request-cta p {
+    margin: 0 0 15px 0;
+    color: #6c757d;
+}
+
+/* Appointments Card */
+.appointments-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.appointments-content {
+    padding: 20px;
+}
+
+.appointment-item {
+    display: flex;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.appointment-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.appointment-item.confirmed {
+    border-left: 4px solid #28a745;
+}
+
+.appointment-date {
+    width: 80px;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+}
+
+.date-day {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.date-month {
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+
+.appointment-info {
+    padding: 15px;
+    flex: 1;
+}
+
+.appointment-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    color: #343a40;
+}
+
+.appointment-info p {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.appointment-info p i {
+    width: 20px;
+    color: var(--primary-color);
+}
+
+.appointment-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.add-appointment {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.confirmation-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s;
+}
+
+.confirmation-message i {
+    margin-right: 8px;
+}
+
+.confirmation-message.fade-out {
+    animation: fadeOut 0.5s;
+}
+
+/* Activity Timeline */
+.activity-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.activity-content {
+    padding: 20px;
+}
+
+.activity-timeline {
+    position: relative;
+}
+
+.activity-timeline::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e9ecef;
+}
+
+.timeline-item {
+    display: flex;
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 45px;
+}
+
+.timeline-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1;
+    position: relative;
+}
+
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #f8f9fa;
+}
+
+.timeline-content h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: #343a40;
+}
+
+.timeline-content p {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.timeline-time {
+    font-size: 0.8rem;
+    color: #adb5bd;
+}
+
+/* Hospitals Card */
+.hospitals-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.hospitals-content {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.hospitals-map {
+    background: #f8f9fa;
+    border-radius: 8px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #6c757d;
+}
+
+.map-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.hospitals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.hospital-item {
+    display: flex;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hospital-item:hover,
+.hospital-item.active {
+    background: #e9ecef;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.hospital-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5rem;
+}
+
+.hospital-info {
+    flex: 1;
+}
+
+.hospital-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: #343a40;
+}
+
+.hospital-info p {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.hospital-info p i {
+    width: 20px;
+    color: var(--primary-color);
+}
+
+.blood-availability {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.blood-type {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.blood-type.available {
+    background: #d4edda;
+    color: #155724;
+}
+
+.blood-type.limited {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.blood-type.unavailable {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .hospitals-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .hospitals-map {
+        height: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .medical-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .medical-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .appointment-item {
+        flex-direction: column;
+    }
+    
+    .appointment-date {
+        width: 100%;
+        padding: 10px 0;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .date-month {
+        margin-top: 0;
+    }
+    
+    .request-actions {
+        flex-direction: column;
+    }
+    
+    .request-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-row {
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+    
+    .info-label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .appointment-actions {
+        flex-direction: column;
+    }
+    
+    .appointment-actions .btn {
+        width: 100%;
+    }
+}
